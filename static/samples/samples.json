@@ -1,0 +1,37 @@
+[
+  {
+    "stage": 0,
+    "stage_name": "No DR",
+    "filename": "sample_stage_0_002c21358ce6.png",
+    "url": "/static/samples/sample_stage_0_002c21358ce6.png",
+    "id_code": "002c21358ce6"
+  },
+  {
+    "stage": 1,
+    "stage_name": "Mild",
+    "filename": "sample_stage_1_0024cdab0c1e.png",
+    "url": "/static/samples/sample_stage_1_0024cdab0c1e.png",
+    "id_code": "0024cdab0c1e"
+  },
+  {
+    "stage": 2,
+    "stage_name": "Moderate",
+    "filename": "sample_stage_2_000c1434d8d7.png",
+    "url": "/static/samples/sample_stage_2_000c1434d8d7.png",
+    "id_code": "000c1434d8d7"
+  },
+  {
+    "stage": 3,
+    "stage_name": "Severe",
+    "filename": "sample_stage_3_0104b032c141.png",
+    "url": "/static/samples/sample_stage_3_0104b032c141.png",
+    "id_code": "0104b032c141"
+  },
+  {
+    "stage": 4,
+    "stage_name": "Proliferative",
+    "filename": "sample_stage_4_001639a390f0.png",
+    "url": "/static/samples/sample_stage_4_001639a390f0.png",
+    "id_code": "001639a390f0"
+  }
+]

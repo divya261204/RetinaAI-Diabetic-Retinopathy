@@ -1,0 +1,4 @@
+Model,Test Accuracy (%),Macro Precision (%),Macro Recall (%),Macro F1 (%),Best Val Accuracy (%),Best Epoch
+Balanced CNN,65.09,33.89,40.5,35.54,61.2,14
+MobileNetV2,55.09,40.75,31.41,29.68,61.02,2
+Fine-tuned MobileNetV2,70.36,58.87,51.88,49.77,62.3,15

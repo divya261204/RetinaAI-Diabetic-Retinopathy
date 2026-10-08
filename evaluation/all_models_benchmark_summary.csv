@@ -1,0 +1,6 @@
+Model,Test Accuracy (%),Macro Precision (%),Macro Recall (%),Macro F1 (%),Architecture Type
+Balanced Custom CNN,65.09,33.89,40.5,35.54,Custom Baseline
+MobileNetV2 (Transfer),55.09,40.75,31.41,29.68,Transfer Learning
+Fine-Tuned MobileNetV2,66.73,55.12,50.45,47.84,Fine-Tuned CNN
+EfficientNet-B0,67.64,52.94,49.24,46.58,Compound Scaled CNN
+Ensemble (Multi-Model),72.91,60.1,55.99,54.7,Dual-Model Ensemble

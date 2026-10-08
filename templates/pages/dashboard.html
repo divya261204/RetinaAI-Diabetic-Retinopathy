@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard · RetinaAI</title>
+
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
+
+    <aside class="app-sidebar">
+
+        <div class="brand">
+
+            <div class="brand-row">
+
+                <div class="brand-mark">
+                    R
+                </div>
+
+                <div class="brand-name">
+                    RetinaAI
+                </div>
+
+            </div>
+
+            <div class="brand-subtitle">
+                EXPLAINABLE RETINAL SCREENING
+            </div>
+
+        </div>
+
+
+        <div class="sidebar-section">
+            Workspace
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a href="/dashboard"
+               class="sidebar-link active">
+
+                <span class="sidebar-icon">⌂</span>
+                <span>Dashboard</span>
+
+            </a>
+
+
+            <a href="/screening"
+               class="sidebar-link">
+
+                <span class="sidebar-icon">＋</span>
+                <span>New Screening</span>
+
+            </a>
+
+
+            <a href="/history"
+               class="sidebar-link">
+
+                <span class="sidebar-icon">▤</span>
+                <span>Screening History</span>
+
+            </a>
+
+
+            <a href="/analytics"
+               class="sidebar-link">
+
+                <span class="sidebar-icon">◫</span>
+                <span>Analytics</span>
+
+            </a>
+
+
+            <a href="/explainable-ai"
+               class="sidebar-link">
+
+                <span class="sidebar-icon">◎</span>
+                <span>Explainable AI</span>
+
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-section">
+            System
+        </div>
+
+
+        <div class="sidebar-nav">
+
+            <a href="/health"
+               class="sidebar-link">
+
+                <span class="sidebar-icon">✓</span>
+                <span>System Health</span>
+
+            </a>
+
+        </div>
+
+
+        <div class="sidebar-footer">
+
+            <div class="system-status">
+
+                <span class="status-dot"></span>
+
+                <span>
+                    AI system operational
+                </span>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =====================================================
+         MAIN
+         ===================================================== -->
+
+    <main class="app-main">
+
+
+        <!-- TOP HEADER -->
+
+        <header class="top-header">
+
+            <div class="header-left">
+
+                <span class="header-label">
+                    RetinaAI
+                </span>
+
+                <span class="header-divider"></span>
+
+                <span class="header-page">
+                    Dashboard
+                </span>
+
+            </div>
+
+
+            <div class="header-right">
+
+                <div class="header-status">
+
+                    <span class="status-dot"></span>
+
+                    System Ready
+
+                </div>
+
+
+                <div class="user-avatar">
+                    AI
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- CONTENT -->
+
+        <section class="content">
+
+
+            <!-- PAGE HEADING -->
+
+            <div class="page-heading">
+
+                <div>
+
+                    <h1>
+                        Screening Overview
+                    </h1>
+
+                    <p>
+                        Monitor the retinal screening system and model configuration.
+                    </p>
+
+                </div>
+
+
+                <div class="heading-actions">
+
+                    <a href="/screening"
+                       class="btn btn-primary">
+
+                        <span>＋</span>
+
+                        New Screening
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 STATISTICS
+                 ================================================= -->
+
+            <div class="stat-grid">
+
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+                        Model Accuracy
+                    </div>
+
+                    <div class="stat-value">
+                        70.36%
+                    </div>
+
+                    <div class="stat-description">
+                        Test-set performance
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+                        Model Architecture
+                    </div>
+
+                    <div class="stat-value">
+                        MobileNetV2
+                    </div>
+
+                    <div class="stat-description">
+                        Fine-tuned transfer learning
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+                        Classification Classes
+                    </div>
+
+                    <div class="stat-value">
+                        5
+                    </div>
+
+                    <div class="stat-description">
+                        Retinopathy severity levels
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+                        Explainability
+                    </div>
+
+                    <div class="stat-value">
+                        Grad-CAM
+                    </div>
+
+                    <div class="stat-description">
+                        Visual model interpretation
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 DASHBOARD GRID
+                 ================================================= -->
+
+            <div class="dashboard-grid">
+
+
+                <!-- MODEL OVERVIEW -->
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <div>
+
+                            <div class="card-title">
+                                Model Overview
+                            </div>
+
+                            <div class="card-subtitle">
+                                Current screening model configuration
+                            </div>
+
+                        </div>
+
+                        <span class="badge badge-green">
+                            Active
+                        </span>
+
+                    </div>
+
+
+                    <div class="model-overview">
+
+
+                        <div class="model-item">
+
+                            <div class="model-item-label">
+                                Architecture
+                            </div>
+
+                            <div class="model-item-value">
+                                MobileNetV2
+                            </div>
+
+                        </div>
+
+
+                        <div class="model-item">
+
+                            <div class="model-item-label">
+                                Input Size
+                            </div>
+
+                            <div class="model-item-value">
+                                224 × 224 × 3
+                            </div>
+
+                        </div>
+
+
+                        <div class="model-item">
+
+                            <div class="model-item-label">
+                                Output
+                            </div>
+
+                            <div class="model-item-value">
+                                5-Class Softmax
+                            </div>
+
+                        </div>
+
+
+                        <div class="model-item">
+
+                            <div class="model-item-label">
+                                Interpretability
+                            </div>
+
+                            <div class="model-item-value">
+                                Grad-CAM
+                            </div>
+
+                        </div>
+
+
+                        <div class="model-item">
+
+                            <div class="model-item-label">
+                                Preprocessing
+                            </div>
+
+                            <div class="model-item-value">
+                                CLAHE + Gaussian
+                            </div>
+
+                        </div>
+
+
+                        <div class="model-item">
+
+                            <div class="model-item-label">
+                                Framework
+                            </div>
+
+                            <div class="model-item-value">
+                                TensorFlow
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- QUICK ACTION -->
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <div>
+
+                            <div class="card-title">
+                                Quick Screening
+                            </div>
+
+                            <div class="card-subtitle">
+                                Start a new retinal image analysis
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div style="
+                        padding: 20px;
+                        background: #f8fafc;
+                        border-radius: 12px;
+                        border: 1px solid #edf0f4;
+                    ">
+
+                        <div style="
+                            font-size: 25px;
+                            margin-bottom: 12px;
+                        ">
+                            +
+                        </div>
+
+                        <div style="
+                            font-size: 13px;
+                            font-weight: 700;
+                            margin-bottom: 5px;
+                        ">
+                            Upload a retinal image
+                        </div>
+
+                        <div style="
+                            font-size: 11px;
+                            color: #6b7280;
+                            margin-bottom: 17px;
+                        ">
+                            The system will preprocess the image,
+                            generate a model output and create a Grad-CAM explanation.
+                        </div>
+
+                        <a href="/screening"
+                           class="btn btn-primary">
+
+                            Start Screening
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SCREENING PIPELINE -->
+
+                <div class="card full-width">
+
+                    <div class="card-header">
+
+                        <div>
+
+                            <div class="card-title">
+                                AI Screening Pipeline
+                            </div>
+
+                            <div class="card-subtitle">
+                                Processing workflow used by RetinaAI
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="pipeline">
+
+
+                        <div class="pipeline-step">
+
+                            <div class="pipeline-number">
+                                01
+                            </div>
+
+                            <div class="pipeline-title">
+                                Image
+                            </div>
+
+                            <div class="pipeline-description">
+                                Fundus image upload
+                            </div>
+
+                        </div>
+
+
+                        <div class="pipeline-arrow">
+                            →
+                        </div>
+
+
+                        <div class="pipeline-step">
+
+                            <div class="pipeline-number">
+                                02
+                            </div>
+
+                            <div class="pipeline-title">
+                                Preprocessing
+                            </div>
+
+                            <div class="pipeline-description">
+                                Resize & enhancement
+                            </div>
+
+                        </div>
+
+
+                        <div class="pipeline-arrow">
+                            →
+                        </div>
+
+
+                        <div class="pipeline-step">
+
+                            <div class="pipeline-number">
+                                03
+                            </div>
+
+                            <div class="pipeline-title">
+                                CNN Model
+                            </div>
+
+                            <div class="pipeline-description">
+                                MobileNetV2 inference
+                            </div>
+
+                        </div>
+
+
+                        <div class="pipeline-arrow">
+                            →
+                        </div>
+
+
+                        <div class="pipeline-step">
+
+                            <div class="pipeline-number">
+                                04
+                            </div>
+
+                            <div class="pipeline-title">
+                                Screening
+                            </div>
+
+                            <div class="pipeline-description">
+                                Five-class output
+                            </div>
+
+                        </div>
+
+
+                        <div class="pipeline-arrow">
+                            →
+                        </div>
+
+
+                        <div class="pipeline-step">
+
+                            <div class="pipeline-number">
+                                05
+                            </div>
+
+                            <div class="pipeline-title">
+                                Grad-CAM
+                            </div>
+
+                            <div class="pipeline-description">
+                                Visual explanation
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CLASSIFICATION -->
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <div>
+
+                            <div class="card-title">
+                                Screening Classes
+                            </div>
+
+                            <div class="card-subtitle">
+                                Model output categories
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div style="
+                        display: flex;
+                        flex-wrap: wrap;
+                        gap: 8px;
+                    ">
+
+                        <span class="badge badge-green">
+                            No DR
+                        </span>
+
+                        <span class="badge badge-blue">
+                            Mild
+                        </span>
+
+                        <span class="badge badge-amber">
+                            Moderate
+                        </span>
+
+                        <span class="badge badge-red">
+                            Severe
+                        </span>
+
+                        <span class="badge badge-purple">
+                            Proliferative
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- EXPLAINABILITY -->
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <div>
+
+                            <div class="card-title">
+                                Explainable AI
+                            </div>
+
+                            <div class="card-subtitle">
+                                Model interpretation
+                            </div>
+
+                        </div>
+
+                        <span class="badge badge-purple">
+                            Grad-CAM
+                        </span>
+
+                    </div>
+
+
+                    <p style="
+                        color: #6b7280;
+                        font-size: 11px;
+                        line-height: 1.7;
+                        margin-bottom: 16px;
+                    ">
+                        Grad-CAM provides a visual heatmap showing
+                        image regions that contributed more strongly
+                        to the model output.
+                    </p>
+
+
+                    <a href="/explainable-ai"
+                       class="btn btn-secondary">
+
+                        View Explanation
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- DISCLAIMER -->
+
+            <div class="app-footer">
+
+                <div class="disclaimer">
+
+                    <strong>Academic prototype:</strong>
+                    RetinaAI is intended for academic research and
+                    demonstration purposes. Model outputs are screening
+                    results and should not be considered a medical diagnosis.
+                    Professional clinical review is recommended.
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+</html>

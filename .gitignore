@@ -1,0 +1,46 @@
+# Environments & Virtualenvs
+venv/
+.venv/
+env/
+ENV/
+
+# Python cache & artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.coverage
+
+# Datasets & Large Zips & Model Weights
+dataset/
+*.zip
+*.tar.gz
+*.rar
+*.keras
+*.h5
+*.pt
+*.pth
+
+# Uploads & Temp Result Files (keep folder structure)
+static/uploads/*
+!static/uploads/.gitkeep
+static/results/*
+!static/results/.gitkeep
+static/reports/*
+!static/reports/.gitkeep
+
+# Node & Frontend dependencies
+frontend/node_modules/
+node_modules/
+frontend/.vite/
+.eslintcache
+
+# SQLite database file
+database/retina_screenings.db
+
+# OS / Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

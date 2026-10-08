@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>RetinaAI · Screening Result</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #eef5ff,
+                    #f8fbff
+                );
+
+            color: #172033;
+        }
+
+        .container {
+            width: min(1150px, 94%);
+            margin: 30px auto 60px;
+        }
+
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 28px;
+            box-shadow:
+                0 10px 35px rgba(0,0,0,0.08);
+            margin-bottom: 24px;
+        }
+
+        .brand {
+            font-size: 28px;
+            font-weight: 800;
+            color: #173f8a;
+        }
+
+        .subtitle {
+            margin-top: 8px;
+            color: #657084;
+            font-size: 15px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(320px, 1fr)
+                );
+
+            gap: 22px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+
+            box-shadow:
+                0 10px 35px rgba(0,0,0,0.07);
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #173f8a;
+        }
+
+        h3 {
+            color: #26364d;
+            margin-top: 0;
+        }
+
+        .prediction {
+            font-size: 38px;
+            font-weight: 800;
+            margin: 10px 0;
+            color: #173f8a;
+        }
+
+        .confidence {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .image-box {
+            width: 100%;
+            background: #f2f5f9;
+            border-radius: 15px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .image-box img {
+            width: 100%;
+            max-height: 500px;
+            object-fit: contain;
+            border-radius: 12px;
+        }
+
+        .probability {
+            margin: 15px 0;
+        }
+
+        .probability-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .bar {
+            width: 100%;
+            height: 11px;
+            background: #e7ebf2;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            background: #3478d4;
+            border-radius: 20px;
+        }
+
+        .explanation {
+            background: #f4f8ff;
+            border-left: 5px solid #3478d4;
+            padding: 16px;
+            border-radius: 10px;
+            line-height: 1.6;
+        }
+
+        .quality {
+            padding: 16px;
+            background: #f7f9fc;
+            border-radius: 12px;
+            line-height: 1.7;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 7px 13px;
+            border-radius: 20px;
+            background: #eef4ff;
+            color: #245ca8;
+            font-weight: 700;
+        }
+
+        .button-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 13px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            background: #173f8a;
+            color: white;
+        }
+
+        .button.secondary {
+            background: #e8eef8;
+            color: #173f8a;
+        }
+
+        .notice {
+            margin-top: 24px;
+            padding: 18px;
+            border-radius: 14px;
+            background: #fff8e6;
+            border: 1px solid #f0d58a;
+            line-height: 1.6;
+            color: #5e4a14;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 35px;
+            color: #788398;
+            font-size: 13px;
+        }
+
+        @media (max-width: 650px) {
+
+            .container {
+                width: 92%;
+            }
+
+            .prediction {
+                font-size: 30px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <div class="brand">
+            RetinaAI
+        </div>
+
+        <div class="subtitle">
+            Lightweight CNN · Fine-tuned MobileNetV2 ·
+            5-Class Classification · Explainable AI
+        </div>
+
+    </div>
+
+
+    <!-- MAIN RESULT -->
+
+    <div class="grid">
+
+
+        <!-- PREDICTION CARD -->
+
+        <div class="card">
+
+            <h2>
+                Latest Prediction
+            </h2>
+
+            <div class="prediction">
+                {{ prediction | default('No Result', true) }}
+            </div>
+
+            <div class="confidence">
+
+                Confidence:
+                {{ "%.2f"|format(
+                    confidence | default(0, true)
+                ) }}%
+
+            </div>
+
+
+            <!-- INTERPRETATION -->
+
+            <div class="explanation">
+
+                <strong>
+                    AI Interpretation
+                </strong>
+
+                <p>
+
+                    {{ interpretation |
+                       default(
+                       "The model generated a screening result based on the uploaded retinal image.",
+                       true
+                       )
+                    }}
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- QUALITY CARD -->
+
+        <div class="card">
+
+            <h2>
+                Image Quality
+            </h2>
+
+            <div class="quality">
+
+                <div>
+                    <strong>Status:</strong>
+
+                    <span class="status">
+                        {{ quality.status |
+                           default('Not Available', true) }}
+                    </span>
+                </div>
+
+                <div>
+                    <strong>Resolution:</strong>
+
+                    {{ quality.width |
+                       default('N/A', true) }}
+
+                    ×
+
+                    {{ quality.height |
+                       default('N/A', true) }}
+                </div>
+
+                <div>
+                    <strong>Brightness:</strong>
+
+                    {{ quality.brightness |
+                       default('N/A', true) }}
+                </div>
+
+                <div>
+                    <strong>Sharpness:</strong>
+
+                    {{ quality.sharpness |
+                       default('N/A', true) }}
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- ORIGINAL IMAGE -->
+
+    <div class="card" style="margin-top:22px;">
+
+        <h2>
+            Retinal Fundus Image
+        </h2>
+
+        {% if original_image %}
+
+        <div class="image-box">
+
+            <img
+                src="{{ original_image }}"
+                alt="Uploaded retinal fundus image"
+            >
+
+        </div>
+
+        {% elif uploaded_image %}
+
+        <div class="image-box">
+
+            <img
+                src="{{ uploaded_image }}"
+                alt="Uploaded retinal fundus image"
+            >
+
+        </div>
+
+        {% else %}
+
+        <p>
+            Original image is not available.
+        </p>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- PROBABILITIES -->
+
+    <div class="card" style="margin-top:22px;">
+
+        <h2>
+            Class Probabilities
+        </h2>
+
+        {% if probabilities %}
+
+            {% for probability in probabilities %}
+
+            <div class="probability">
+
+                <div class="probability-header">
+
+                    <span>
+                        {{ class_names[loop.index0] }}
+                    </span>
+
+                    <span>
+                        {{ "%.2f"|format(probability * 100) }}%
+                    </span>
+
+                </div>
+
+                <div class="bar">
+
+                    <div
+                        class="bar-fill"
+                        style="width: {{ probability * 100 }}%;">
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <p>
+                Probability information is not available.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- GRAD-CAM HEATMAP -->
+
+    <div class="card" style="margin-top:22px;">
+
+        <h2>
+            🔥 Grad-CAM Heatmap
+        </h2>
+
+        <p>
+            The heatmap is generated from the model's
+            internal convolutional features.
+        </p>
+
+
+        {% if heatmap_image %}
+
+        <div class="image-box">
+
+            <img
+                src="{{ heatmap_image }}"
+                alt="Grad-CAM heatmap"
+            >
+
+        </div>
+
+        {% else %}
+
+        <div class="explanation">
+
+            Grad-CAM heatmap could not be generated
+            for this screening.
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- GRAD-CAM OVERLAY -->
+
+    <div class="card" style="margin-top:22px;">
+
+        <h2>
+            🔥 Explainable AI Overlay
+        </h2>
+
+        <p>
+            This visualization overlays the Grad-CAM
+            explanation on the original retinal image.
+        </p>
+
+
+        {% if result_image %}
+
+        <div class="image-box">
+
+            <img
+                src="{{ result_image }}"
+                alt="Grad-CAM AI explanation overlay"
+            >
+
+        </div>
+
+        {% else %}
+
+        <div class="explanation">
+
+            Grad-CAM overlay could not be generated
+            for this screening.
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- EXPLANATION -->
+
+    <div class="card" style="margin-top:22px;">
+
+        <h2>
+            Explainable AI Interpretation
+        </h2>
+
+        <div class="explanation">
+
+            {{ interpretation |
+               default(
+               "Grad-CAM highlights regions that contributed more strongly to the model's prediction. It is an AI interpretability aid and does not prove that a highlighted region represents a disease lesion.",
+               true
+               )
+            }}
+
+        </div>
+
+    </div>
+
+
+    <!-- BUTTONS -->
+
+    <div class="card" style="margin-top:22px;">
+
+        <div class="button-row">
+
+            <a
+                href="/"
+                class="button"
+            >
+                ← New Screening
+            </a>
+
+
+            {% if report_url %}
+
+            <a
+                href="{{ report_url }}"
+                class="button secondary"
+                target="_blank"
+            >
+                📄 View Report
+            </a>
+
+            {% endif %}
+
+
+            {% if report_filename %}
+
+            <a
+                href="/download-report/{{ report_filename }}"
+                class="button secondary"
+            >
+                ⬇ Download Report
+            </a>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- DISCLAIMER -->
+
+    <div class="notice">
+
+        <strong>
+            Academic Prototype Disclaimer
+        </strong>
+
+        <br><br>
+
+        This system is an academic AI screening prototype.
+        The model output is not a medical diagnosis and should
+        not be used as a substitute for examination by a
+        qualified healthcare professional.
+
+        <br><br>
+
+        Grad-CAM provides an interpretability visualization
+        of model behavior. Highlighted regions should not be
+        interpreted as confirmed disease lesions.
+
+    </div>
+
+
+    <div class="footer">
+
+        RetinaAI · Fine-tuned MobileNetV2 ·
+        5-Class Classification · Grad-CAM
+
+    </div>
+
+
+</div>
+
+
+<!-- =========================================================
+     SAVE RESULT TO LOCAL STORAGE
+========================================================= -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        try {
+
+            const resultData = {
+
+                prediction:
+                    {{ prediction | default('', true) | tojson }},
+
+                confidence:
+                    {{ confidence | default(0, true) | tojson }},
+
+                resultImage:
+                    {{ result_image | default('', true) | tojson }},
+
+                heatmapImage:
+                    {{ heatmap_image | default('', true) | tojson }},
+
+                originalImage:
+                    {{ original_image | default('', true) | tojson }},
+
+                interpretation:
+                    {{ interpretation | default('', true) | tojson }},
+
+                time:
+                    new Date().toLocaleString()
+
+            };
+
+
+            /*
+             * Save latest screening result
+             */
+
+            localStorage.setItem(
+                "retina_latest_result",
+                JSON.stringify(resultData)
+            );
+
+
+            /*
+             * Save screening history
+             */
+
+            let history =
+                JSON.parse(
+                    localStorage.getItem(
+                        "retina_history"
+                    ) || "[]"
+                );
+
+
+            history.unshift({
+
+                cls:
+                    resultData.prediction,
+
+                conf:
+                    resultData.confidence,
+
+                time:
+                    resultData.time,
+
+                image:
+                    resultData.resultImage,
+
+                heatmap:
+                    resultData.heatmapImage
+
+            });
+
+
+            /*
+             * Keep latest 20 screenings
+             */
+
+            history =
+                history.slice(0, 20);
+
+
+            localStorage.setItem(
+                "retina_history",
+                JSON.stringify(history)
+            );
+
+
+            console.log(
+                "RetinaAI result saved successfully."
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                "RetinaAI localStorage error:",
+                error
+            );
+
+        }
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>

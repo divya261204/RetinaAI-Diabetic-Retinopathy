@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>RetinaAI - Screening Result</title>
+
+    <style>
+
+        .warning-box {
+    margin-top: 20px;
+    padding: 18px;
+    border-radius: 12px;
+    border: 1px solid #f59e0b;
+    background: #451a03;
+    color: #fef3c7;
+}
+
+.warning-box strong {
+    font-size: 18px;
+}
+
+.warning-box p {
+    margin-top: 8px;
+    line-height: 1.6;
+}
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+
+            margin: 0;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background:
+                #07111f;
+
+            color:
+                #eaf2f8;
+        }
+
+
+        .container {
+
+            width: 92%;
+
+            max-width: 1200px;
+
+            margin:
+                30px auto 60px;
+        }
+
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        .header {
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items:
+                center;
+
+            margin-bottom: 25px;
+        }
+
+
+        .brand {
+
+            font-size: 25px;
+
+            font-weight: bold;
+        }
+
+
+        .brand span {
+
+            color:
+                #62e6bd;
+        }
+
+
+        .back {
+
+            text-decoration: none;
+
+            color:
+                #9fb5c8;
+
+            border:
+                1px solid #26394b;
+
+            padding:
+                10px 16px;
+
+            border-radius:
+                10px;
+        }
+
+
+        .back:hover {
+
+            background:
+                #102132;
+        }
+
+
+        /* =====================================================
+           CARDS
+        ===================================================== */
+
+        .card {
+
+            background:
+                #0d1b2a;
+
+            border:
+                1px solid #1d3347;
+
+            border-radius:
+                16px;
+
+            padding:
+                24px;
+
+            margin-bottom:
+                20px;
+
+            box-shadow:
+                0 8px 30px
+                rgba(0,0,0,0.18);
+        }
+
+
+        h1 {
+
+            margin-top: 0;
+
+            font-size: 28px;
+        }
+
+
+        h2 {
+
+            margin-top: 0;
+
+            font-size: 20px;
+        }
+
+
+        .subtitle {
+
+            color:
+                #91a8bb;
+
+            line-height:
+                1.6;
+        }
+
+
+        /* =====================================================
+           RESULT SUMMARY
+        ===================================================== */
+
+        .result-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap:
+                20px;
+        }
+
+
+        .result-box {
+
+            background:
+                #091624;
+
+            border:
+                1px solid #20384d;
+
+            border-radius:
+                14px;
+
+            padding:
+                22px;
+        }
+
+
+        .label {
+
+            color:
+                #8da5b8;
+
+            font-size:
+                13px;
+
+            margin-bottom:
+                8px;
+        }
+
+
+        .prediction {
+
+            font-size:
+                28px;
+
+            font-weight:
+                bold;
+
+            color:
+                #62e6bd;
+        }
+
+
+        .confidence {
+
+            font-size:
+                28px;
+
+            font-weight:
+                bold;
+        }
+
+
+        .confidence-bar {
+
+            width:
+                100%;
+
+            height:
+                12px;
+
+            background:
+                #1a2a39;
+
+            border-radius:
+                20px;
+
+            overflow:
+                hidden;
+
+            margin-top:
+                12px;
+        }
+
+
+        .confidence-fill {
+
+            height:
+                100%;
+
+            background:
+                #62e6bd;
+
+            border-radius:
+                20px;
+        }
+
+
+        /* =====================================================
+           IMAGE DISPLAY
+        ===================================================== */
+
+        .image-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap:
+                20px;
+        }
+
+
+        .image-box {
+
+            background:
+                #091624;
+
+            border:
+                1px solid #20384d;
+
+            border-radius:
+                14px;
+
+            padding:
+                15px;
+        }
+
+
+        .image-box h3 {
+
+            margin-top:
+                0;
+
+            font-size:
+                16px;
+        }
+
+
+        .image-box img {
+
+            width:
+                100%;
+
+            max-height:
+                430px;
+
+            object-fit:
+                contain;
+
+            display:
+                block;
+
+            border-radius:
+                10px;
+
+            background:
+                #000;
+        }
+
+
+        /* =====================================================
+           PROBABILITY BARS
+        ===================================================== */
+
+        .probability-row {
+
+            margin-bottom:
+                18px;
+        }
+
+
+        .probability-header {
+
+            display:
+                flex;
+
+            justify-content:
+                space-between;
+
+            align-items:
+                center;
+
+            margin-bottom:
+                7px;
+        }
+
+
+        .class-name {
+
+            font-weight:
+                bold;
+
+            color:
+                #dce8f0;
+        }
+
+
+        .percentage {
+
+            color:
+                #62e6bd;
+
+            font-weight:
+                bold;
+        }
+
+
+        .probability-track {
+
+            width:
+                100%;
+
+            height:
+                14px;
+
+            background:
+                #1a2a39;
+
+            border-radius:
+                20px;
+
+            overflow:
+                hidden;
+        }
+
+
+        .probability-fill {
+
+            height:
+                100%;
+
+            background:
+                #62e6bd;
+
+            border-radius:
+                20px;
+
+            transition:
+                width 0.5s ease;
+        }
+
+
+        /* =====================================================
+           QUALITY
+        ===================================================== */
+
+        .quality-good {
+
+            color:
+                #62e6bd;
+
+            font-weight:
+                bold;
+        }
+
+
+        .quality-warning {
+
+            color:
+                #f2c75c;
+
+            font-weight:
+                bold;
+        }
+
+
+        .quality-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap:
+                12px;
+
+            margin-top:
+                18px;
+        }
+
+
+        .quality-item {
+
+            background:
+                #091624;
+
+            border:
+                1px solid #20384d;
+
+            border-radius:
+                12px;
+
+            padding:
+                15px;
+        }
+
+
+        .quality-item span {
+
+            display:
+                block;
+
+            color:
+                #8da5b8;
+
+            font-size:
+                12px;
+
+            margin-bottom:
+                6px;
+        }
+
+
+        .quality-item strong {
+
+            font-size:
+                15px;
+        }
+
+
+        .warning {
+
+            margin-top:
+                18px;
+
+            padding:
+                16px;
+
+            border-radius:
+                12px;
+
+            background:
+                #29230e;
+
+            border:
+                1px solid #65531e;
+
+            color:
+                #e5d48b;
+
+            line-height:
+                1.6;
+        }
+
+
+        .success {
+
+            margin-top:
+                18px;
+
+            padding:
+                16px;
+
+            border-radius:
+                12px;
+
+            background:
+                #09251f;
+
+            border:
+                1px solid #205c4f;
+
+            color:
+                #9de6cf;
+
+            line-height:
+                1.6;
+        }
+
+
+        /* =====================================================
+           INTERPRETATION
+        ===================================================== */
+
+        .interpretation {
+
+            line-height:
+                1.7;
+
+            color:
+                #c2d1dc;
+
+            background:
+                #091624;
+
+            border-left:
+                4px solid #62e6bd;
+
+            padding:
+                18px;
+
+            border-radius:
+                8px;
+        }
+
+
+        /* =====================================================
+           GRAD CAM
+        ===================================================== */
+
+        .gradcam-note {
+
+            color:
+                #91a8bb;
+
+            line-height:
+                1.6;
+
+            margin-bottom:
+                20px;
+        }
+
+
+        .gradcam-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap:
+                20px;
+        }
+
+
+        .gradcam-box {
+
+            background:
+                #091624;
+
+            border:
+                1px solid #20384d;
+
+            border-radius:
+                14px;
+
+            padding:
+                15px;
+        }
+
+
+        .gradcam-box h3 {
+
+            margin-top:
+                0;
+
+            font-size:
+                16px;
+        }
+
+
+        .gradcam-box img {
+
+            width:
+                100%;
+
+            max-height:
+                450px;
+
+            object-fit:
+                contain;
+
+            background:
+                #000;
+
+            border-radius:
+                10px;
+
+            display:
+                block;
+        }
+
+
+        /* =====================================================
+           SAFETY
+        ===================================================== */
+
+        .medical-warning {
+
+            background:
+                #241619;
+
+            border:
+                1px solid #63323b;
+
+            color:
+                #e6b8bf;
+
+            padding:
+                18px;
+
+            border-radius:
+                12px;
+
+            line-height:
+                1.6;
+        }
+
+
+        /* =====================================================
+           BUTTONS
+        ===================================================== */
+
+        .buttons {
+
+            display:
+                flex;
+
+            gap:
+                12px;
+
+            flex-wrap:
+                wrap;
+
+            margin-top:
+                25px;
+        }
+
+
+        .button {
+
+            display:
+                inline-block;
+
+            text-decoration:
+                none;
+
+            padding:
+                12px 18px;
+
+            border-radius:
+                10px;
+
+            background:
+                #62e6bd;
+
+            color:
+                #06131f;
+
+            font-weight:
+                bold;
+        }
+
+
+        .button.secondary {
+
+            background:
+                #162839;
+
+            color:
+                #dce8f0;
+
+            border:
+                1px solid #2b4357;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media(max-width: 800px) {
+
+            .result-grid,
+            .image-grid,
+            .gradcam-grid {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .quality-grid {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+        }
+.download-btn {
+    display: inline-block;
+    padding: 12px 20px;
+    margin: 10px;
+    background: #198754;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.download-btn:hover {
+    background: #146c43;
+}
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <div class="header">
+
+        <div class="brand">
+
+            Retina<span>AI</span>
+
+        </div>
+
+
+        <a
+            href="/"
+            class="back"
+        >
+            ← New Screening
+        </a>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         RESULT SUMMARY
+    ====================================================== -->
+
+    <div class="card">
+
+        <h1>
+            Screening Result
+        </h1>
+
+        <p class="subtitle">
+            AI-assisted retinal image screening result.
+            This is a prototype and should not be considered
+            a medical diagnosis.
+        </p>
+
+
+        <div class="result-grid">
+
+
+            <div class="result-box">
+
+                <div class="label">
+                    MODEL OUTPUT
+                </div>
+
+                <div class="prediction">
+                    {{ prediction }}
+                </div>
+
+            </div>
+
+
+            <div class="result-box">
+
+                <div class="label">
+                    MODEL CONFIDENCE
+                </div>
+
+                <div class="confidence">
+
+                    {{ confidence }}%
+
+                </div>
+
+
+                <div class="confidence-bar">
+
+                    <div
+                        class="confidence-fill"
+                        style="width: {{ confidence }}%;"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         ORIGINAL IMAGE
+    ====================================================== -->
+
+    <div class="card">
+
+        <h2>
+            🖼 Retinal Image
+        </h2>
+
+
+        <div class="image-box">
+
+            <img
+                src="{{ original_image }}"
+                alt="Uploaded retinal image"
+            >
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         PROBABILITY DISTRIBUTION
+    ====================================================== -->
+
+    <div class="card">
+
+        <h2>
+            📊 5-Class Probability Distribution
+        </h2>
+
+
+        <p class="subtitle">
+
+            The bars show the model's output probability
+            for each diabetic retinopathy class.
+
+            These probabilities represent model output and
+            are not medical certainty.
+
+        </p>
+
+
+        {% if probabilities %}
+
+            {% for item in probabilities %}
+
+                <div class="probability-row">
+
+
+                    <div class="probability-header">
+
+                        <span class="class-name">
+
+                            {{ item.name }}
+
+                        </span>
+
+
+                        <span class="percentage">
+
+                            {{ "%.2f"|format(item.probability * 100) }}%
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="probability-track">
+
+                        <div
+                            class="probability-fill"
+                            style="
+                                width:
+                                {{ item.probability * 100 }}%;
+                            "
+                        ></div>
+
+                    </div>
+
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="warning">
+
+                Probability information is not available.
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+
+    <!-- =====================================================
+         IMAGE QUALITY
+    ====================================================== -->
+
+    <div class="card">
+
+        <h2>
+            🔍 Image Quality Check
+        </h2>
+
+
+        {% if quality %}
+
+
+            {% if quality.status == "Acceptable" %}
+
+                <div class="success">
+
+                    <strong>
+                        🟢 Image Quality: Acceptable
+                    </strong>
+
+                    <br>
+
+                    {{ quality.message }}
+
+                </div>
+
+            {% else %}
+
+                <div class="warning">
+
+                    <strong>
+                        🟠 Image Quality: Review
+                    </strong>
+
+                    <br>
+
+                    {{ quality.message }}
+
+                </div>
+
+            {% endif %}
+
+
+
+            <div class="quality-grid">
+
+
+                <div class="quality-item">
+
+                    <span>
+                        Resolution
+                    </span>
+
+                    <strong>
+                        {{ quality.resolution }}
+                    </strong>
+
+                </div>
+
+
+                <div class="quality-item">
+
+                    <span>
+                        Brightness
+                    </span>
+
+                    <strong>
+                        {{ quality.brightness }}
+                    </strong>
+
+                </div>
+
+
+                <div class="quality-item">
+
+                    <span>
+                        Sharpness
+                    </span>
+
+                    <strong>
+                        {{ quality.sharpness }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            {% if quality.issues and quality.issues|length > 0 %}
+
+                <div class="warning">
+
+                    <strong>
+                        ⚠ Quality Issues Detected
+                    </strong>
+
+                    <ul>
+
+                        {% for issue in quality.issues %}
+
+                            <li>
+                                {{ issue }}
+                            </li>
+
+                        {% endfor %}
+
+                    </ul>
+
+                </div>
+
+            {% endif %}
+
+
+        {% else %}
+
+            <div class="warning">
+
+                Image quality information is unavailable.
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+
+    <!-- =====================================================
+         INTERPRETATION
+    ====================================================== -->
+
+    <div class="card">
+
+        <h2>
+            🧠 Screening Interpretation
+        </h2>
+
+
+        <div class="interpretation">
+
+            {{ interpretation }}
+
+        </div>
+
+        {% if confidence < 60 %}
+<div class="warning-box">
+    <strong>⚠ Low Model Confidence</strong>
+    <p>
+        The model confidence is relatively low for this screening result.
+        The prediction should not be relied upon alone and should be reviewed
+        by a qualified eye-care professional.
+    </p>
+</div>
+{% endif %}
+
+    </div>
+
+
+
+    <!-- =====================================================
+         GRAD CAM
+    ====================================================== -->
+
+    <div class="card">
+
+        <h2>
+            🔥 Grad-CAM AI Explanation
+        </h2>
+
+
+        <p class="gradcam-note">
+
+            Grad-CAM highlights image regions that contributed
+            to the CNN's prediction. It is an interpretability
+            aid and does not prove that a highlighted region
+            represents a disease lesion.
+
+        </p>
+
+
+        <div class="gradcam-grid">
+
+
+            <div class="gradcam-box">
+
+                <h3>
+                    🔥 Grad-CAM Heatmap
+                </h3>
+
+
+                <img
+                    src="{{ heatmap_image }}"
+                    alt="Grad-CAM heatmap"
+                >
+
+            </div>
+
+
+
+            <div class="gradcam-box">
+
+                <h3>
+                    🔥 AI Explanation Overlay
+                </h3>
+
+
+                <img
+                    src="{{ result_image }}"
+                    alt="Grad-CAM overlay"
+                >
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         MEDICAL SAFETY
+    ====================================================== -->
+
+    <div class="card">
+
+        <div class="medical-warning">
+
+            <strong>
+                ⚠ Important Medical Notice
+            </strong>
+
+            <br><br>
+
+            This system is an academic AI screening prototype.
+            The model output should not be used as a standalone
+            medical diagnosis or treatment decision.
+
+            A qualified eye-care professional should review
+            retinal findings and determine appropriate
+            clinical follow-up.
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         BUTTONS
+    ====================================================== -->
+
+    <div class="buttons">
+
+        <a
+            href="/"
+            class="button"
+        >
+            🔄 Screen Another Image
+        </a>
+
+
+        <a
+            href="/"
+            class="button secondary"
+        >
+            🏠 Back to Dashboard
+        </a>
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =========================================================
+     SAVE RESULT TO LOCAL STORAGE
+========================================================= -->
+
+<script>
+
+const resultData = {
+
+    prediction:
+        "{{ prediction }}",
+
+    confidence:
+        "{{ confidence }}",
+
+    resultImage:
+        "{{ result_image }}",
+
+    heatmapImage:
+        "{{ heatmap_image }}",
+
+    originalImage:
+        "{{ original_image }}",
+
+    interpretation:
+        "{{ interpretation }}",
+
+    time:
+        new Date().toLocaleString()
+
+};
+
+
+localStorage.setItem(
+
+    "retina_latest_result",
+
+    JSON.stringify(resultData)
+
+);
+
+
+
+let history =
+    JSON.parse(
+
+        localStorage.getItem(
+            "retina_history"
+        ) || "[]"
+
+    );
+
+
+
+history.unshift({
+
+    cls:
+        "{{ prediction }}",
+
+    conf:
+        "{{ confidence }}",
+
+    time:
+        new Date().toLocaleString(),
+
+    image:
+        "{{ result_image }}",
+
+    heatmap:
+        "{{ heatmap_image }}"
+
+});
+
+
+
+history =
+    history.slice(
+        0,
+        20
+    );
+
+
+
+localStorage.setItem(
+
+    "retina_history",
+
+    JSON.stringify(history)
+
+);
+
+</script>
+
+<a href="{{ report_url }}" class="download-btn" target="_blank">
+    📄 Download Screening Report
+</a>
+
+</body>
+
+</html>

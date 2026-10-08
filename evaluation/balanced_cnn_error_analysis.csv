@@ -1,0 +1,6 @@
+Class,Total Images,Correct,Incorrect,Recall,Error Rate
+No DR,271,253,18,0.933579335793358,0.06642066420664207
+Mild,56,35,21,0.625,0.375
+Moderate,150,70,80,0.4666666666666667,0.5333333333333333
+Severe,29,0,29,0.0,1.0
+Proliferative,44,0,44,0.0,1.0

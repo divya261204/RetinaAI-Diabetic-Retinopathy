@@ -1,0 +1,16 @@
+actual_label,predicted_label,Error Count
+Moderate,Mild,53
+No DR,Mild,22
+Proliferative,Moderate,22
+Severe,Moderate,14
+Proliferative,Mild,13
+Moderate,No DR,10
+Severe,Proliferative,7
+Mild,No DR,6
+Mild,Moderate,5
+Moderate,Proliferative,4
+Moderate,Severe,2
+Severe,Mild,2
+Proliferative,No DR,1
+Proliferative,Severe,1
+Severe,No DR,1

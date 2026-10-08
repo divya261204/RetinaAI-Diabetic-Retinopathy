@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RetinaAI | Diabetic Retinopathy Screening</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg: #f4f7fb;
+            --surface: #ffffff;
+            --surface-soft: #f8fafc;
+            --navy: #0b1736;
+            --navy-light: #132650;
+            --blue: #2563eb;
+            --blue-dark: #1d4ed8;
+            --cyan: #06b6d4;
+            --green: #10b981;
+            --text: #172033;
+            --muted: #667085;
+            --border: #e4e9f1;
+            --shadow: 0 12px 35px rgba(15, 23, 42, 0.08);
+            --radius: 18px;
+        }
+
+        body {
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button,
+        input {
+            font: inherit;
+        }
+
+        /* =========================================================
+           TOP NAVIGATION
+        ========================================================= */
+
+        .topbar {
+            height: 74px;
+            background: rgba(255, 255, 255, 0.96);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(12px);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 13px;
+            background: linear-gradient(135deg, var(--blue), var(--cyan));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 21px;
+            box-shadow: 0 7px 18px rgba(37, 99, 235, 0.25);
+        }
+
+        .brand-name {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.4px;
+            color: var(--navy);
+        }
+
+        .brand-subtitle {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 2px;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .system-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #ecfdf5;
+            border: 1px solid #bbf7d0;
+            color: #047857;
+            padding: 8px 13px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--green);
+            border-radius: 50%;
+        }
+
+        /* =========================================================
+           HERO
+        ========================================================= */
+
+        .hero {
+            background:
+                radial-gradient(circle at 85% 20%, rgba(6, 182, 212, 0.25), transparent 28%),
+                radial-gradient(circle at 15% 80%, rgba(37, 99, 235, 0.25), transparent 30%),
+                linear-gradient(135deg, #0a1735, #12295b);
+
+            color: white;
+            padding: 70px 5% 78px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            width: 360px;
+            height: 360px;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 50%;
+            right: -100px;
+            top: -130px;
+        }
+
+        .hero-inner {
+            max-width: 1180px;
+            margin: auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 13px;
+            border: 1px solid rgba(255,255,255,0.18);
+            background: rgba(255,255,255,0.08);
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #c9f7ff;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: clamp(34px, 5vw, 56px);
+            line-height: 1.05;
+            letter-spacing: -1.8px;
+            max-width: 800px;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span {
+            color: #67e8f9;
+        }
+
+        .hero p {
+            max-width: 680px;
+            color: #c6d2e8;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .hero-stat {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 12px 17px;
+            min-width: 125px;
+        }
+
+        .hero-stat strong {
+            display: block;
+            font-size: 18px;
+            color: white;
+        }
+
+        .hero-stat small {
+            color: #aebdd5;
+            font-size: 11px;
+        }
+
+        /* =========================================================
+           MAIN
+        ========================================================= */
+
+        .main {
+            max-width: 1180px;
+            margin: -38px auto 0;
+            padding: 0 22px 60px;
+            position: relative;
+            z-index: 5;
+        }
+
+        .section-heading {
+            margin-bottom: 20px;
+        }
+
+        .section-heading h2 {
+            font-size: 22px;
+            color: var(--navy);
+            margin-bottom: 6px;
+        }
+
+        .section-heading p {
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        /* =========================================================
+           SCREENING CARD
+        ========================================================= */
+
+        .screening-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 23px 26px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .card-title-icon {
+            width: 40px;
+            height: 40px;
+            background: #eff6ff;
+            color: var(--blue);
+            border-radius: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 19px;
+        }
+
+        .card-title h3 {
+            font-size: 16px;
+            color: var(--navy);
+        }
+
+        .card-title p {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 3px;
+        }
+
+        .model-badge {
+            background: #f0fdfa;
+            color: #0f766e;
+            border: 1px solid #ccfbf1;
+            padding: 7px 11px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .screening-content {
+            display: grid;
+            grid-template-columns: 1.55fr 0.8fr;
+            gap: 25px;
+            padding: 26px;
+        }
+
+        /* =========================================================
+           UPLOAD
+        ========================================================= */
+
+        .upload-box {
+            border: 2px dashed #cbd5e1;
+            background: #f8fafc;
+            border-radius: 16px;
+            min-height: 330px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 35px;
+            transition: 0.25s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .upload-box:hover {
+            border-color: var(--blue);
+            background: #f5f9ff;
+        }
+
+        .upload-box.dragover {
+            border-color: var(--cyan);
+            background: #ecfeff;
+        }
+
+        .upload-icon {
+            width: 72px;
+            height: 72px;
+            margin: auto auto 18px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #dbeafe, #cffafe);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+        }
+
+        .upload-box h3 {
+            font-size: 19px;
+            color: var(--navy);
+            margin-bottom: 8px;
+        }
+
+        .upload-box p {
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .browse-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 11px 19px;
+            background: white;
+            border: 1px solid #d5dce8;
+            border-radius: 9px;
+            color: var(--blue);
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        #imageInput {
+            display: none;
+        }
+
+        .file-name {
+            margin-top: 14px;
+            font-size: 12px;
+            color: var(--blue);
+            font-weight: 700;
+            word-break: break-word;
+        }
+
+        /* =========================================================
+           SIDE INFO
+        ========================================================= */
+
+        .input-info {
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            background: var(--surface-soft);
+            padding: 23px;
+        }
+
+        .input-info h3 {
+            font-size: 15px;
+            color: var(--navy);
+            margin-bottom: 18px;
+        }
+
+        .info-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 11px;
+            margin-bottom: 17px;
+        }
+
+        .info-check {
+            width: 24px;
+            height: 24px;
+            min-width: 24px;
+            border-radius: 7px;
+            background: #ecfdf5;
+            color: #059669;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .info-row strong {
+            display: block;
+            font-size: 12px;
+            color: var(--navy);
+            margin-bottom: 3px;
+        }
+
+        .info-row span {
+            font-size: 11px;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        .supported {
+            margin-top: 8px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+        }
+
+        .supported span {
+            display: inline-block;
+            padding: 5px 8px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            margin: 3px 3px 0 0;
+            font-size: 10px;
+            color: var(--muted);
+            font-weight: 700;
+        }
+
+        /* =========================================================
+           ANALYZE BUTTON
+        ========================================================= */
+
+        .action-area {
+            padding: 0 26px 26px;
+        }
+
+        .analyze-button {
+            width: 100%;
+            border: none;
+            border-radius: 12px;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--blue), var(--cyan));
+            color: white;
+            font-size: 14px;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 10px 24px rgba(37, 99, 235, 0.22);
+            transition: 0.2s ease;
+        }
+
+        .analyze-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 28px rgba(37, 99, 235, 0.3);
+        }
+
+        .analyze-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .privacy-note {
+            text-align: center;
+            color: #8a94a6;
+            font-size: 10px;
+            margin-top: 10px;
+        }
+
+        /* =========================================================
+           PIPELINE
+        ========================================================= */
+
+        .pipeline {
+            margin-top: 25px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 23px 26px;
+            box-shadow: 0 8px 25px rgba(15, 23, 42, 0.04);
+        }
+
+        .pipeline-title {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--navy);
+            margin-bottom: 19px;
+        }
+
+        .pipeline-steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .pipeline-step {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .step-number {
+            width: 31px;
+            height: 31px;
+            border-radius: 9px;
+            background: #eff6ff;
+            color: var(--blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .pipeline-step strong {
+            display: block;
+            font-size: 11px;
+            color: var(--navy);
+        }
+
+        .pipeline-step span {
+            font-size: 9px;
+            color: var(--muted);
+        }
+
+        /* =========================================================
+           AI FEATURES
+        ========================================================= */
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-top: 25px;
+        }
+
+        .feature-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 22px;
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 11px;
+            background: #eff6ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--blue);
+            margin-bottom: 14px;
+        }
+
+        .feature-card h3 {
+            color: var(--navy);
+            font-size: 14px;
+            margin-bottom: 7px;
+        }
+
+        .feature-card p {
+            color: var(--muted);
+            font-size: 11px;
+            line-height: 1.65;
+        }
+
+        /* =========================================================
+           MODEL PERFORMANCE
+        ========================================================= */
+
+        .analytics {
+            margin-top: 25px;
+        }
+
+        .analytics-header {
+            margin-bottom: 15px;
+        }
+
+        .analytics-header h2 {
+            font-size: 19px;
+            color: var(--navy);
+        }
+
+        .analytics-header p {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 4px;
+        }
+
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .metric {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 19px;
+        }
+
+        .metric-label {
+            color: var(--muted);
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .metric-value {
+            font-size: 25px;
+            font-weight: 800;
+            color: var(--navy);
+            margin-top: 7px;
+        }
+
+        .metric-note {
+            font-size: 10px;
+            color: #8993a5;
+            margin-top: 4px;
+        }
+
+        /* =========================================================
+           DISCLAIMER
+        ========================================================= */
+
+        .disclaimer {
+            margin-top: 25px;
+            background: #fffdf5;
+            border: 1px solid #f1e4b4;
+            border-radius: 15px;
+            padding: 19px 21px;
+            display: flex;
+            gap: 13px;
+        }
+
+        .disclaimer-icon {
+            width: 34px;
+            height: 34px;
+            min-width: 34px;
+            border-radius: 9px;
+            background: #fff4c7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #9a6700;
+            font-weight: 800;
+        }
+
+        .disclaimer h3 {
+            color: #725500;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .disclaimer p {
+            color: #816f3b;
+            font-size: 10px;
+            line-height: 1.6;
+        }
+
+        /* =========================================================
+           FOOTER
+        ========================================================= */
+
+        footer {
+            border-top: 1px solid var(--border);
+            background: white;
+            padding: 22px 5%;
+            text-align: center;
+            color: #8b95a7;
+            font-size: 10px;
+        }
+
+        footer strong {
+            color: var(--navy);
+        }
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================= */
+
+        @media (max-width: 850px) {
+
+            .screening-content {
+                grid-template-columns: 1fr;
+            }
+
+            .pipeline-steps {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .metrics {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-right {
+                display: none;
+            }
+        }
+
+        @media (max-width: 560px) {
+
+            .hero {
+                padding: 50px 6% 65px;
+            }
+
+            .main {
+                padding: 0 13px 40px;
+            }
+
+            .screening-content {
+                padding: 17px;
+            }
+
+            .action-area {
+                padding: 0 17px 18px;
+            }
+
+            .card-header {
+                padding: 18px;
+            }
+
+            .pipeline {
+                padding: 19px;
+            }
+
+            .pipeline-steps {
+                grid-template-columns: 1fr;
+            }
+
+            .metrics {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 34px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================================================
+         NAVIGATION
+    ========================================================= -->
+
+    <header class="topbar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                ◉
+            </div>
+
+            <div>
+                <div class="brand-name">
+                    RetinaAI
+                </div>
+
+                <div class="brand-subtitle">
+                    Explainable Retinal Screening
+                </div>
+            </div>
+
+        </div>
+
+        <div class="nav-right">
+
+            <div class="system-status">
+                <span class="status-dot"></span>
+                AI System Ready
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================================================
+         HERO
+    ========================================================= -->
+
+    <section class="hero">
+
+        <div class="hero-inner">
+
+            <div class="hero-label">
+                ✦ Explainable Artificial Intelligence
+            </div>
+
+            <h1>
+                Intelligent screening for
+                <span>diabetic retinopathy</span>
+            </h1>
+
+            <p>
+                RetinaAI analyzes retinal fundus images using a fine-tuned
+                deep learning model and provides an interpretable screening
+                result with Grad-CAM visual explanations.
+            </p>
+
+            <div class="hero-stats">
+
+                <div class="hero-stat">
+                    <strong>5</strong>
+                    <small>DR Classes</small>
+                </div>
+
+                <div class="hero-stat">
+                    <strong>224×224</strong>
+                    <small>Input Resolution</small>
+                </div>
+
+                <div class="hero-stat">
+                    <strong>70.36%</strong>
+                    <small>Test Accuracy</small>
+                </div>
+
+                <div class="hero-stat">
+                    <strong>Grad-CAM</strong>
+                    <small>Explainability</small>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         MAIN CONTENT
+    ========================================================= -->
+
+    <main class="main">
+
+        <div class="section-heading">
+
+            <h2>
+                New Retinal Screening
+            </h2>
+
+            <p>
+                Upload a retinal fundus image to begin AI-assisted analysis.
+            </p>
+
+        </div>
+
+
+        <!-- =====================================================
+             SCREENING CARD
+        ===================================================== -->
+
+        <section class="screening-card">
+
+            <div class="card-header">
+
+                <div class="card-title">
+
+                    <div class="card-title-icon">
+                        ◎
+                    </div>
+
+                    <div>
+                        <h3>
+                            Fundus Image Analysis
+                        </h3>
+
+                        <p>
+                            Secure local processing · No external upload
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="model-badge">
+                    MobileNetV2 · Fine-Tuned
+                </div>
+
+            </div>
+
+
+            <form
+                action="/predict"
+                method="post"
+                enctype="multipart/form-data"
+                id="uploadForm"
+            >
+
+                <div class="screening-content">
+
+
+                    <!-- UPLOAD -->
+
+                    <label
+                        class="upload-box"
+                        for="imageInput"
+                        id="uploadBox"
+                    >
+
+                        <div>
+
+                            <div class="upload-icon">
+                                👁
+                            </div>
+
+                            <h3>
+                                Upload Retinal Fundus Image
+                            </h3>
+
+                            <p>
+                                Select a clear fundus photograph from your
+                                computer for AI-assisted screening.
+                            </p>
+
+                            <span class="browse-button">
+                                Choose Image
+                            </span>
+
+                            <div
+                                class="file-name"
+                                id="fileName"
+                            >
+                            </div>
+
+                        </div>
+
+                        <input
+                            type="file"
+                            name="file"
+                            id="imageInput"
+                            accept=".jpg,.jpeg,.png"
+                            required
+                        >
+
+                    </label>
+
+
+                    <!-- INPUT INFORMATION -->
+
+                    <aside class="input-info">
+
+                        <h3>
+                            Supported Input
+                        </h3>
+
+                        <div class="info-row">
+
+                            <div class="info-check">
+                                ✓
+                            </div>
+
+                            <div>
+                                <strong>Image formats</strong>
+                                <span>
+                                    JPG, JPEG and PNG images are supported.
+                                </span>
+                            </div>
+
+                        </div>
+
+                        <div class="info-row">
+
+                            <div class="info-check">
+                                ✓
+                            </div>
+
+                            <div>
+                                <strong>Recommended image</strong>
+                                <span>
+                                    Use a clear retinal fundus photograph
+                                    with the optic region visible.
+                                </span>
+                            </div>
+
+                        </div>
+
+                        <div class="info-row">
+
+                            <div class="info-check">
+                                ✓
+                            </div>
+
+                            <div>
+                                <strong>AI preprocessing</strong>
+                                <span>
+                                    Resize, normalization, CLAHE enhancement
+                                    and smoothing are applied automatically.
+                                </span>
+                            </div>
+
+                        </div>
+
+                        <div class="supported">
+
+                            <span>JPG</span>
+                            <span>JPEG</span>
+                            <span>PNG</span>
+                            <span>RGB</span>
+
+                        </div>
+
+                    </aside>
+
+                </div>
+
+
+                <div class="action-area">
+
+                    <button
+                        type="submit"
+                        class="analyze-button"
+                        id="analyzeButton"
+                    >
+                        Analyze Retinal Image
+                    </button>
+
+                    <div class="privacy-note">
+                        Academic prototype · Processing is performed by the
+                        local application server.
+                    </div>
+
+                </div>
+
+            </form>
+
+        </section>
+
+
+        <!-- =====================================================
+             AI PIPELINE
+        ===================================================== -->
+
+        <section class="pipeline">
+
+            <div class="pipeline-title">
+                AI Analysis Pipeline
+            </div>
+
+            <div class="pipeline-steps">
+
+                <div class="pipeline-step">
+
+                    <div class="step-number">
+                        01
+                    </div>
+
+                    <div>
+                        <strong>Image Upload</strong>
+                        <span>Fundus photograph</span>
+                    </div>
+
+                </div>
+
+
+                <div class="pipeline-step">
+
+                    <div class="step-number">
+                        02
+                    </div>
+
+                    <div>
+                        <strong>Preprocessing</strong>
+                        <span>Enhancement & normalization</span>
+                    </div>
+
+                </div>
+
+
+                <div class="pipeline-step">
+
+                    <div class="step-number">
+                        03
+                    </div>
+
+                    <div>
+                        <strong>Deep Learning</strong>
+                        <span>Fine-tuned MobileNetV2</span>
+                    </div>
+
+                </div>
+
+
+                <div class="pipeline-step">
+
+                    <div class="step-number">
+                        04
+                    </div>
+
+                    <div>
+                        <strong>Explainability</strong>
+                        <span>Prediction + Grad-CAM</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             FEATURES
+        ===================================================== -->
+
+        <section class="feature-grid">
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    ◈
+                </div>
+
+                <h3>
+                    Multi-Class Classification
+                </h3>
+
+                <p>
+                    The model classifies retinal images into five diabetic
+                    retinopathy severity categories.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    ✦
+                </div>
+
+                <h3>
+                    Explainable AI
+                </h3>
+
+                <p>
+                    Grad-CAM provides a visual representation of regions
+                    contributing to the model output.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    ◉
+                </div>
+
+                <h3>
+                    Image Quality Assessment
+                </h3>
+
+                <p>
+                    Basic image quality indicators help identify images that
+                    may require review before interpretation.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             MODEL ANALYTICS
+        ===================================================== -->
+
+        <section class="analytics">
+
+            <div class="analytics-header">
+
+                <h2>
+                    Model Performance
+                </h2>
+
+                <p>
+                    Evaluation metrics from the held-out test dataset.
+                </p>
+
+            </div>
+
+
+            <div class="metrics">
+
+                <div class="metric">
+
+                    <div class="metric-label">
+                        Test Accuracy
+                    </div>
+
+                    <div class="metric-value">
+                        70.36%
+                    </div>
+
+                    <div class="metric-note">
+                        Fine-tuned MobileNetV2
+                    </div>
+
+                </div>
+
+
+                <div class="metric">
+
+                    <div class="metric-label">
+                        Macro Precision
+                    </div>
+
+                    <div class="metric-value">
+                        59.0%
+                    </div>
+
+                    <div class="metric-note">
+                        Across five classes
+                    </div>
+
+                </div>
+
+
+                <div class="metric">
+
+                    <div class="metric-label">
+                        Macro Recall
+                    </div>
+
+                    <div class="metric-value">
+                        52.0%
+                    </div>
+
+                    <div class="metric-note">
+                        Across five classes
+                    </div>
+
+                </div>
+
+
+                <div class="metric">
+
+                    <div class="metric-label">
+                        Macro F1
+                    </div>
+
+                    <div class="metric-value">
+                        50.0%
+                    </div>
+
+                    <div class="metric-note">
+                        Across five classes
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             DISCLAIMER
+        ===================================================== -->
+
+        <section class="disclaimer">
+
+            <div class="disclaimer-icon">
+                !
+            </div>
+
+            <div>
+
+                <h3>
+                    Academic Prototype & Medical Safety Notice
+                </h3>
+
+                <p>
+                    RetinaAI is an academic deep-learning prototype intended
+                    for research and educational demonstration. Model outputs
+                    are screening results and should not be considered a
+                    medical diagnosis. Predictions and Grad-CAM visualizations
+                    should be reviewed by a qualified healthcare professional.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================================================
+         FOOTER
+    ========================================================= -->
+
+    <footer>
+
+        <strong>RetinaAI</strong>
+        · Lightweight CNN / MobileNetV2 · Explainable AI · Grad-CAM
+        · Academic Project
+
+    </footer>
+
+
+    <!-- =========================================================
+         JAVASCRIPT
+    ========================================================= -->
+
+    <script>
+
+        const imageInput =
+            document.getElementById("imageInput");
+
+        const uploadBox =
+            document.getElementById("uploadBox");
+
+        const fileName =
+            document.getElementById("fileName");
+
+        const uploadForm =
+            document.getElementById("uploadForm");
+
+        const analyzeButton =
+            document.getElementById("analyzeButton");
+
+
+        /* =====================================================
+           FILE SELECTION
+        ===================================================== */
+
+        imageInput.addEventListener("change", function () {
+
+            if (this.files && this.files.length > 0) {
+
+                const file = this.files[0];
+
+                fileName.textContent =
+                    "Selected: " + file.name;
+
+            } else {
+
+                fileName.textContent = "";
+
+            }
+
+        });
+
+
+        /* =====================================================
+           DRAG AND DROP
+        ===================================================== */
+
+        uploadBox.addEventListener("dragover", function (event) {
+
+            event.preventDefault();
+
+            uploadBox.classList.add("dragover");
+
+        });
+
+
+        uploadBox.addEventListener("dragleave", function () {
+
+            uploadBox.classList.remove("dragover");
+
+        });
+
+
+        uploadBox.addEventListener("drop", function (event) {
+
+            event.preventDefault();
+
+            uploadBox.classList.remove("dragover");
+
+            const files = event.dataTransfer.files;
+
+            if (files.length > 0) {
+
+                imageInput.files = files;
+
+                fileName.textContent =
+                    "Selected: " + files[0].name;
+
+            }
+
+        });
+
+
+        /* =====================================================
+           FORM SUBMISSION
+        ===================================================== */
+
+        uploadForm.addEventListener("submit", function () {
+
+            if (!imageInput.files.length) {
+
+                return;
+
+            }
+
+            analyzeButton.disabled = true;
+
+            analyzeButton.textContent =
+                "Analyzing Retinal Image...";
+
+        });
+
+    </script>
+
+</body>
+</html>

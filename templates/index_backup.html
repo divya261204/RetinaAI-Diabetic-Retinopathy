@@ -1,0 +1,2504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>RetinaAI - Diabetic Retinopathy Screening</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Segoe UI,Arial,sans-serif;
+    background:
+        radial-gradient(circle at 80% 0%,#315cff25,transparent 35%),
+        linear-gradient(135deg,#06101d,#091827 60%,#071321);
+    color:#f4f8ff;
+}
+
+button,
+input{
+    font:inherit;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+/* ================= SIDEBAR ================= */
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    width:250px;
+    background:#071522f2;
+    border-right:1px solid #1c3954;
+    padding:24px 16px;
+    z-index:10;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    padding:3px 8px 30px;
+}
+
+.logo{
+    width:44px;
+    height:44px;
+    border-radius:14px;
+    background:linear-gradient(135deg,#35d8ff,#6677ff);
+    display:grid;
+    place-items:center;
+    font-size:22px;
+}
+
+.brand b{
+    font-size:21px;
+}
+
+.brand b span{
+    color:#35d8ff;
+}
+
+.brand small{
+    display:block;
+    color:#70869e;
+    font-size:10px;
+    margin-top:2px;
+}
+
+.nav-title{
+    font-size:10px;
+    color:#627991;
+    letter-spacing:1.4px;
+    margin:12px 10px 8px;
+    text-transform:uppercase;
+}
+
+.nav a{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:12px 13px;
+    border-radius:11px;
+    color:#98aec3;
+    font-size:13px;
+    margin:4px 0;
+}
+
+.nav a:hover,
+.nav a.active{
+    background:#12304b;
+    color:#fff;
+}
+
+.nav .ico{
+    width:20px;
+    text-align:center;
+}
+
+.side-note{
+    position:absolute;
+    bottom:20px;
+    left:23px;
+    right:20px;
+    color:#647990;
+    font-size:10px;
+    line-height:1.65;
+}
+
+/* ================= MAIN ================= */
+
+.main{
+    margin-left:250px;
+    padding:28px 34px;
+    max-width:1550px;
+}
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
+}
+
+.top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    margin-bottom:25px;
+}
+
+.eyebrow{
+    font-size:10px;
+    letter-spacing:1.8px;
+    color:#35d8ff;
+    text-transform:uppercase;
+}
+
+.top h1{
+    font-size:30px;
+    margin:6px 0;
+}
+
+.sub{
+    color:#8fa5bb;
+    font-size:13px;
+}
+
+.status{
+    padding:9px 13px;
+    border:1px solid #205c4f;
+    background:#09251f;
+    border-radius:30px;
+    color:#5be5bc;
+    font-size:11px;
+    font-weight:700;
+}
+
+.dot{
+    display:inline-block;
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:#36dfae;
+    margin-right:7px;
+}
+
+/* ================= CARDS ================= */
+
+.card{
+    background:linear-gradient(145deg,#0d2033f5,#091827f5);
+    border:1px solid #1c3954;
+    border-radius:18px;
+    box-shadow:0 18px 45px #0005;
+}
+
+.grid{
+    display:grid;
+    gap:17px;
+}
+
+.g4{
+    grid-template-columns:repeat(4,1fr);
+}
+
+.g3{
+    grid-template-columns:repeat(3,1fr);
+}
+
+.g2{
+    grid-template-columns:repeat(2,1fr);
+}
+
+.stat{
+    padding:20px;
+}
+
+.stat .k{
+    font-size:10px;
+    color:#71879e;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+.stat .v{
+    font-size:24px;
+    font-weight:800;
+    margin-top:8px;
+}
+
+.stat .s{
+    font-size:10px;
+    color:#56d9b2;
+    margin-top:5px;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+    padding:27px;
+    display:grid;
+    grid-template-columns:1.25fr .75fr;
+    gap:25px;
+    margin-bottom:18px;
+}
+
+.hero h2{
+    font-size:25px;
+    margin:3px 0 10px;
+}
+
+.hero p{
+    color:#8fa5bb;
+    line-height:1.7;
+    font-size:13px;
+}
+
+.chips{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:17px;
+}
+
+.chip{
+    padding:7px 10px;
+    border-radius:20px;
+    border:1px solid #254762;
+    background:#102a42;
+    color:#b7d5e9;
+    font-size:10px;
+}
+
+.quick{
+    padding:20px;
+}
+
+.quick h3{
+    margin:0 0 12px;
+}
+
+.row{
+    display:flex;
+    justify-content:space-between;
+    padding:11px 0;
+    border-bottom:1px solid #1b3045;
+    font-size:11px;
+    color:#8fa5bb;
+}
+
+.row:last-child{
+    border:0;
+}
+
+.row b{
+    color:#fff;
+}
+
+/* ================= SECTIONS ================= */
+
+.section{
+    padding:23px;
+    margin-bottom:17px;
+}
+
+.section h2{
+    font-size:19px;
+    margin:0 0 5px;
+}
+
+.desc{
+    color:#8fa5bb;
+    font-size:11px;
+    margin-bottom:18px;
+}
+
+/* ================= BUTTONS ================= */
+
+.primary{
+    display:inline-block;
+    border:0;
+    border-radius:10px;
+    padding:12px 18px;
+    background:linear-gradient(135deg,#35d8ff,#6677ff);
+    color:white;
+    font-size:12px;
+    font-weight:800;
+    cursor:pointer;
+}
+
+.primary.green{
+    background:linear-gradient(135deg,#18c996,#159f99);
+    width:100%;
+    margin-top:13px;
+}
+
+.choose{
+    display:inline-block;
+    border:0;
+    border-radius:10px;
+    padding:12px 18px;
+    background:linear-gradient(135deg,#35d8ff,#6677ff);
+    color:white;
+    font-size:12px;
+    font-weight:800;
+    cursor:pointer;
+}
+
+/* ================= SCREENING ================= */
+
+.upload-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:17px;
+}
+
+.drop{
+    min-height:300px;
+    border:2px dashed #2c5978;
+    border-radius:17px;
+    background:#081828;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:22px;
+}
+
+.drop:hover{
+    border-color:#35d8ff;
+}
+
+.eye{
+    font-size:45px;
+    margin-bottom:12px;
+}
+
+.drop h3{
+    margin:0 0 7px;
+}
+
+.drop p{
+    color:#8fa5bb;
+    font-size:11px;
+    max-width:350px;
+    line-height:1.6;
+}
+
+.file-name{
+    color:#35d8ff;
+    font-size:10px;
+    margin-top:10px;
+    min-height:14px;
+}
+
+.preview{
+    min-height:300px;
+    background:#07121f;
+    border:1px solid #1c3954;
+    border-radius:17px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    overflow:hidden;
+}
+
+.preview img{
+    display:none;
+    max-width:100%;
+    max-height:300px;
+    object-fit:contain;
+}
+
+.placeholder{
+    color:#60758a;
+    font-size:11px;
+}
+
+/* ================= PIPELINE ================= */
+
+.pipeline{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:9px;
+}
+
+.step{
+    padding:17px 12px;
+    text-align:center;
+    border:1px solid #264862;
+    border-radius:13px;
+    background:#0a1b2c;
+}
+
+.step strong{
+    display:block;
+    margin:7px 0 4px;
+    font-size:11px;
+}
+
+.step span{
+    font-size:9px;
+    color:#8fa5bb;
+}
+
+/* ================= AI EXPLANATION ================= */
+
+.result{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:17px;
+}
+
+.bigresult{
+    padding:27px;
+    text-align:center;
+}
+
+.classbox{
+    font-size:28px;
+    font-weight:800;
+    margin:13px 0 5px;
+    color:#35d8ff;
+}
+
+.confidence{
+    font-size:13px;
+    color:#36dfae;
+}
+
+.meter{
+    height:9px;
+    background:#17283a;
+    border-radius:10px;
+    margin:17px 0;
+    overflow:hidden;
+}
+
+.meter i{
+    display:block;
+    height:100%;
+    background:linear-gradient(90deg,#35d8ff,#6677ff);
+    border-radius:10px;
+    width:0%;
+}
+
+.heatmap{
+    min-height:330px;
+    border:1px solid #1c3954;
+    border-radius:15px;
+    background:#071522;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+}
+
+.heatmap img{
+    max-width:100%;
+    max-height:330px;
+    display:block;
+}
+
+.empty-heatmap{
+    color:#657a90;
+    font-size:11px;
+    text-align:center;
+    padding:30px;
+}
+
+.explanation-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+
+.explain-card{
+    padding:18px;
+    background:#0a1b2c;
+    border:1px solid #1c3954;
+    border-radius:14px;
+}
+
+.explain-icon{
+    font-size:23px;
+}
+
+.explain-card h3{
+    font-size:13px;
+}
+
+.explain-card p{
+    color:#8fa5bb;
+    font-size:11px;
+    line-height:1.6;
+}
+
+/* ================= HISTORY ================= */
+
+.history-empty{
+    text-align:center;
+    padding:55px;
+    color:#667c92;
+}
+
+.history-item{
+    display:grid;
+    grid-template-columns:70px 1fr auto;
+    gap:15px;
+    align-items:center;
+    padding:13px;
+    border-bottom:1px solid #1b3044;
+}
+
+.thumb{
+    width:70px;
+    height:55px;
+    border-radius:9px;
+    background:#0a1928;
+    object-fit:cover;
+}
+
+.history-item small{
+    display:block;
+    color:#71879d;
+    margin-top:4px;
+}
+
+.view{
+    border:1px solid #2a506c;
+    background:#0c2438;
+    color:#c4deee;
+    border-radius:8px;
+    padding:7px 10px;
+    font-size:9px;
+    cursor:pointer;
+}
+
+.notice{
+    padding:14px;
+    border:1px solid #534921;
+    background:#211f12;
+    color:#d9ce94;
+    border-radius:12px;
+    font-size:10px;
+    line-height:1.6;
+    margin-top:16px;
+}
+
+/* ================= ANALYTICS ================= */
+
+.table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:11px;
+}
+
+.table th,
+.table td{
+    text-align:left;
+    padding:12px;
+    border-bottom:1px solid #1c3045;
+}
+
+.table th{
+    color:#73889e;
+    font-size:9px;
+    text-transform:uppercase;
+}
+
+.table td{
+    color:#c4d2df;
+}
+
+.bar{
+    margin:14px 0;
+}
+
+.barline{
+    display:flex;
+    justify-content:space-between;
+    font-size:10px;
+    margin-bottom:5px;
+}
+
+.barbg{
+    height:8px;
+    background:#17283a;
+    border-radius:8px;
+}
+
+.barfill{
+    height:8px;
+    border-radius:8px;
+    background:linear-gradient(90deg,#35d8ff,#6677ff);
+}
+
+/* ================= ARCHITECTURE ================= */
+
+.arch{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:8px;
+    align-items:center;
+}
+
+.arch div{
+    padding:18px 9px;
+    text-align:center;
+    border:1px solid #264862;
+    border-radius:12px;
+    background:#0b2034;
+    font-size:10px;
+}
+
+.arch b{
+    font-size:9px;
+    color:#35d8ff;
+    display:block;
+    margin-bottom:6px;
+}
+
+/* ================= FOOTER ================= */
+
+.footer{
+    text-align:center;
+    color:#52687e;
+    font-size:10px;
+    padding:20px 0;
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:1050px){
+
+    .g4{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .hero,
+    .upload-grid,
+    .result{
+        grid-template-columns:1fr;
+    }
+
+    .pipeline,
+    .arch{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:760px){
+
+    .sidebar{
+        position:relative;
+        width:100%;
+        height:auto;
+    }
+
+    .side-note{
+        display:none;
+    }
+
+    .nav{
+        display:flex;
+        overflow:auto;
+    }
+
+    .nav a{
+        white-space:nowrap;
+    }
+
+    .main{
+        margin:0;
+        padding:18px;
+    }
+
+    .g4,
+    .g3,
+    .g2{
+        grid-template-columns:1fr;
+    }
+
+    .top{
+        flex-direction:column;
+        gap:12px;
+    }
+
+    .explanation-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+<!-- ================= SIDEBAR ================= -->
+
+<aside class="sidebar">
+
+    <div class="brand">
+
+        <div class="logo">◉</div>
+
+        <div>
+            <b>Retina<span>AI</span></b>
+
+            <small>
+                Smart Retinal Screening
+            </small>
+        </div>
+
+    </div>
+
+
+    <div class="nav-title">
+        Workspace
+    </div>
+
+
+    <nav class="nav">
+
+        <a href="#dashboard"
+           data-page="dashboard"
+           class="active">
+
+            <span class="ico">⌂</span>
+            Dashboard
+
+        </a>
+
+
+        <a href="#screening"
+           data-page="screening">
+
+            <span class="ico">◉</span>
+            Screening
+
+        </a>
+
+
+        <a href="#explanation"
+           data-page="explanation">
+
+            <span class="ico">✦</span>
+            AI Explanation
+
+        </a>
+
+
+        <a href="#analytics"
+           data-page="analytics">
+
+            <span class="ico">▣</span>
+            Analytics
+
+        </a>
+
+
+        <a href="#history"
+           data-page="history">
+
+            <span class="ico">◷</span>
+            History
+
+        </a>
+
+
+        <a href="#about"
+           data-page="about">
+
+            <span class="ico">ⓘ</span>
+            About Model
+
+        </a>
+
+    </nav>
+
+
+    <div class="side-note">
+
+        <b style="color:#a1b4c8">
+            Research Prototype
+        </b>
+
+        <br>
+
+        Lightweight CNN · 5-Class Classification · Grad-CAM
+
+        <br><br>
+
+        Local processing enabled
+
+    </div>
+
+</aside>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="main">
+
+
+<!-- ================= DASHBOARD ================= -->
+
+<section id="dashboard"
+         class="page active">
+
+    <div class="top">
+
+        <div>
+
+            <div class="eyebrow">
+                AI Retinal Intelligence Platform
+            </div>
+
+            <h1>
+                Screening Dashboard
+            </h1>
+
+            <div class="sub">
+                Explainable diabetic-retinopathy screening research prototype.
+            </div>
+
+        </div>
+
+
+        <div class="status">
+
+            <span class="dot"></span>
+
+            MODEL READY
+
+        </div>
+
+    </div>
+
+
+    <div class="hero card">
+
+        <div>
+
+            <div class="eyebrow">
+                Welcome to RetinaAI
+            </div>
+
+            <h2>
+                From retinal image to explainable insight.
+            </h2>
+
+            <p>
+                Upload a fundus photograph, run the lightweight CNN,
+                and inspect a Grad-CAM visualization showing regions
+                that influenced the model prediction.
+            </p>
+
+
+            <div class="chips">
+
+                <span class="chip">
+                    ⚡ Lightweight CNN
+                </span>
+
+                <span class="chip">
+                    🧠 Explainable AI
+                </span>
+
+                <span class="chip">
+                    🔒 Local Processing
+                </span>
+
+                <span class="chip">
+                    🎯 5 Classes
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="quick">
+
+            <h3>
+                System Snapshot
+            </h3>
+
+            <div class="row">
+                <span>Input</span>
+                <b>224 × 224 RGB</b>
+            </div>
+
+            <div class="row">
+                <span>Classes</span>
+                <b>5 severity levels</b>
+            </div>
+
+            <div class="row">
+                <span>Explanation</span>
+                <b>Grad-CAM</b>
+            </div>
+
+            <div class="row">
+                <span>Model</span>
+                <b>Lightweight CNN</b>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="grid g4">
+
+        <div class="card stat">
+
+            <div class="k">
+                Validation Accuracy
+            </div>
+
+            <div class="v">
+                56.07%
+            </div>
+
+            <div class="s">
+                Current evaluation
+            </div>
+
+        </div>
+
+
+        <div class="card stat">
+
+            <div class="k">
+                Input Resolution
+            </div>
+
+            <div class="v">
+                224×224
+            </div>
+
+            <div class="s">
+                Standardized image
+            </div>
+
+        </div>
+
+
+        <div class="card stat">
+
+            <div class="k">
+                Classes
+            </div>
+
+            <div class="v">
+                05
+            </div>
+
+            <div class="s">
+                DR severity levels
+            </div>
+
+        </div>
+
+
+        <div class="card stat">
+
+            <div class="k">
+                Explainability
+            </div>
+
+            <div class="v">
+                Grad-CAM
+            </div>
+
+            <div class="s">
+                Enabled
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="card section"
+         style="margin-top:17px">
+
+        <h2>
+            Quick Start
+        </h2>
+
+        <div class="desc">
+            Complete a screening in five steps.
+        </div>
+
+
+        <div class="pipeline">
+
+            <div class="step">
+                ①
+                <strong>Upload</strong>
+                <span>Choose fundus image</span>
+            </div>
+
+            <div class="step">
+                ②
+                <strong>Preprocess</strong>
+                <span>Resize & normalize</span>
+            </div>
+
+            <div class="step">
+                ③
+                <strong>Classify</strong>
+                <span>5-class CNN</span>
+            </div>
+
+            <div class="step">
+                ④
+                <strong>Explain</strong>
+                <span>Generate Grad-CAM</span>
+            </div>
+
+            <div class="step">
+                ⑤
+                <strong>Review</strong>
+                <span>Inspect result</span>
+            </div>
+
+        </div>
+
+
+        <button class="primary green"
+                onclick="go('screening')">
+
+            Start New Screening →
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- ================= SCREENING ================= -->
+
+<section id="screening"
+         class="page">
+
+    <div class="top">
+
+        <div>
+
+            <div class="eyebrow">
+                Screening Workspace
+            </div>
+
+            <h1>
+                New Retinal Screening
+            </h1>
+
+            <div class="sub">
+                Upload a clear fundus image for analysis.
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="card section">
+
+        <div class="upload-grid">
+
+
+            <div>
+
+                <div class="drop"
+                     id="drop">
+
+                    <div class="eye">
+                        👁
+                    </div>
+
+                    <h3>
+                        Upload Fundus Image
+                    </h3>
+
+                    <p>
+                        Supported formats: JPG, JPEG, PNG.
+                        The image will be processed by your
+                        local FastAPI + CNN prototype.
+                    </p>
+
+
+                    <label class="choose"
+                           for="file">
+
+                        📤 Choose Image
+
+                    </label>
+
+
+                    <input id="file"
+                           type="file"
+                           accept=".jpg,.jpeg,.png"
+                           hidden>
+
+
+                    <div id="fname"
+                         class="file-name">
+
+                        No image selected
+
+                    </div>
+
+                </div>
+
+
+                <form id="predictForm"
+                      action="/predict"
+                      method="post"
+                      enctype="multipart/form-data">
+
+
+                    <input id="serverFile"
+                           name="file"
+                           type="file"
+                           hidden>
+
+
+                    <button class="primary green"
+                            type="submit">
+
+                        ⚡ Analyze Retinal Image
+
+                    </button>
+
+                </form>
+
+            </div>
+
+
+            <div class="preview">
+
+                <span class="placeholder"
+                      id="ph">
+
+                    Image preview will appear here
+
+                </span>
+
+
+                <img id="previewImg"
+                     alt="Fundus preview">
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="grid g3">
+
+        <div class="card stat">
+
+            <div class="k">
+                Preprocessing
+            </div>
+
+            <div class="v">
+                CLAHE
+            </div>
+
+            <div class="s">
+                Image enhancement
+            </div>
+
+        </div>
+
+
+        <div class="card stat">
+
+            <div class="k">
+                CNN Output
+            </div>
+
+            <div class="v">
+                Softmax
+            </div>
+
+            <div class="s">
+                5 probabilities
+            </div>
+
+        </div>
+
+
+        <div class="card stat">
+
+            <div class="k">
+                Explanation
+            </div>
+
+            <div class="v">
+                Grad-CAM
+            </div>
+
+            <div class="s">
+                Visual explanation
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= AI EXPLANATION ================= -->
+
+<section id="explanation"
+         class="page">
+
+    <div class="top">
+
+        <div>
+
+            <div class="eyebrow">
+                Explainable AI
+            </div>
+
+            <h1>
+                AI Explanation
+            </h1>
+
+            <div class="sub">
+                Understand which image regions influenced the prediction.
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="result">
+
+
+        <!-- LATEST RESULT -->
+
+        <div class="card bigresult">
+
+            <div class="eyebrow">
+                Latest Prediction
+            </div>
+
+
+            <div class="classbox"
+                 id="lastClass">
+
+                No result yet
+
+            </div>
+
+
+            <div class="confidence"
+                 id="lastConf">
+
+                Run a screening first
+
+            </div>
+
+
+            <div class="meter">
+
+                <i id="meter"></i>
+
+            </div>
+
+
+            <div class="desc">
+
+                The confidence shown here is the model's
+                output for the selected class, not a medical certainty.
+
+            </div>
+
+        </div>
+
+
+        <!-- GRAD CAM -->
+
+        <div class="card section">
+
+            <h2>
+                🔥 Grad-CAM AI Explanation
+            </h2>
+
+            <div class="desc">
+
+                The heatmap shows image regions that contributed
+                to the CNN prediction.
+
+            </div>
+
+
+            <div class="heatmap"
+                 id="heatmap">
+
+                <div class="empty-heatmap">
+
+                    No analysis loaded yet.
+
+                    <br><br>
+
+                    Run a screening and return here.
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- EXPLANATION CARDS -->
+
+    <div class="card section"
+         style="margin-top:17px">
+
+        <h2>
+            🧠 How the AI Reached This Result
+        </h2>
+
+        <div class="desc">
+
+            The prototype processes the retinal image through
+            multiple stages before producing the prediction.
+
+        </div>
+
+
+        <div class="explanation-grid">
+
+
+            <div class="explain-card">
+
+                <div class="explain-icon">
+                    👁️
+                </div>
+
+                <h3>
+                    1. Retinal Image
+                </h3>
+
+                <p>
+                    The uploaded fundus photograph is used
+                    as the input to the screening system.
+                </p>
+
+            </div>
+
+
+            <div class="explain-card">
+
+                <div class="explain-icon">
+                    ⚙️
+                </div>
+
+                <h3>
+                    2. Preprocessing
+                </h3>
+
+                <p>
+                    The image is resized to 224 × 224 pixels
+                    and prepared for CNN processing.
+                </p>
+
+            </div>
+
+
+            <div class="explain-card">
+
+                <div class="explain-icon">
+                    🧠
+                </div>
+
+                <h3>
+                    3. CNN Classification
+                </h3>
+
+                <p>
+                    The CNN extracts visual features and
+                    produces probabilities for five classes.
+                </p>
+
+            </div>
+
+
+            <div class="explain-card">
+
+                <div class="explain-icon">
+                    🎯
+                </div>
+
+                <h3>
+                    4. Prediction
+                </h3>
+
+                <p>
+                    The class with the highest model probability
+                    is selected as the predicted category.
+                </p>
+
+            </div>
+
+
+            <div class="explain-card">
+
+                <div class="explain-icon">
+                    🔥
+                </div>
+
+                <h3>
+                    5. Grad-CAM
+                </h3>
+
+                <p>
+                    Grad-CAM identifies image regions that
+                    contributed strongly to the selected prediction.
+                </p>
+
+            </div>
+
+
+            <div class="explain-card">
+
+                <div class="explain-icon">
+                    💡
+                </div>
+
+                <h3>
+                    6. Human Interpretation
+                </h3>
+
+                <p>
+                    The heatmap helps researchers understand
+                    where the model focused during prediction.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="notice">
+
+        ⚠️ The heatmap explains model behavior.
+        It should not be interpreted as a medical diagnosis.
+
+    </div>
+
+</section>
+
+
+<!-- ================= ANALYTICS ================= -->
+
+<section id="analytics"
+         class="page">
+
+    <div class="top">
+
+        <div>
+
+            <div class="eyebrow">
+                Model Evaluation
+            </div>
+
+            <h1>
+                Analytics
+            </h1>
+
+            <div class="sub">
+                Current evaluation values from the trained prototype.
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="grid g4">
+
+
+        <div class="card stat">
+
+            <div class="k">
+                Accuracy
+            </div>
+
+            <div class="v">
+                56.07%
+            </div>
+
+            <div class="s">
+                733 validation images
+            </div>
+
+        </div>
+
+
+        <div class="card stat">
+
+            <div class="k">
+                Macro Precision
+            </div>
+
+            <div class="v">
+                0.37
+            </div>
+
+            <div class="s">
+                Across 5 classes
+            </div>
+
+        </div>
+
+
+        <div class="card stat">
+
+            <div class="k">
+                Macro Recall
+            </div>
+
+            <div class="v">
+                0.39
+            </div>
+
+            <div class="s">
+                Across 5 classes
+            </div>
+
+        </div>
+
+
+        <div class="card stat">
+
+            <div class="k">
+                Macro F1
+            </div>
+
+            <div class="v">
+                0.32
+            </div>
+
+            <div class="s">
+                Across 5 classes
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="grid g2"
+         style="margin-top:17px">
+
+
+        <div class="card section">
+
+            <h2>
+                Class-wise Performance
+            </h2>
+
+            <div class="desc">
+                Current evaluation.
+            </div>
+
+
+            <table class="table">
+
+                <tr>
+                    <th>Class</th>
+                    <th>Precision</th>
+                    <th>Recall</th>
+                    <th>F1</th>
+                </tr>
+
+                <tr>
+                    <td>No DR</td>
+                    <td>0.90</td>
+                    <td>0.94</td>
+                    <td>0.92</td>
+                </tr>
+
+                <tr>
+                    <td>Mild</td>
+                    <td>0.20</td>
+                    <td>0.73</td>
+                    <td>0.32</td>
+                </tr>
+
+                <tr>
+                    <td>Moderate</td>
+                    <td>0.33</td>
+                    <td>0.02</td>
+                    <td>0.04</td>
+                </tr>
+
+                <tr>
+                    <td>Severe</td>
+                    <td>0.29</td>
+                    <td>0.13</td>
+                    <td>0.18</td>
+                </tr>
+
+                <tr>
+                    <td>Proliferative</td>
+                    <td>0.14</td>
+                    <td>0.15</td>
+                    <td>0.15</td>
+                </tr>
+
+            </table>
+
+        </div>
+
+
+        <div class="card section">
+
+            <h2>
+                F1 Score
+            </h2>
+
+            <div class="desc">
+                Current class-level F1 values.
+            </div>
+
+
+            <div class="bar">
+
+                <div class="barline">
+                    <span>No DR</span>
+                    <b>0.92</b>
+                </div>
+
+                <div class="barbg">
+                    <div class="barfill"
+                         style="width:92%">
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="bar">
+
+                <div class="barline">
+                    <span>Mild</span>
+                    <b>0.32</b>
+                </div>
+
+                <div class="barbg">
+                    <div class="barfill"
+                         style="width:32%">
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="bar">
+
+                <div class="barline">
+                    <span>Moderate</span>
+                    <b>0.04</b>
+                </div>
+
+                <div class="barbg">
+                    <div class="barfill"
+                         style="width:4%">
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="bar">
+
+                <div class="barline">
+                    <span>Severe</span>
+                    <b>0.18</b>
+                </div>
+
+                <div class="barbg">
+                    <div class="barfill"
+                         style="width:18%">
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="bar">
+
+                <div class="barline">
+                    <span>Proliferative</span>
+                    <b>0.15</b>
+                </div>
+
+                <div class="barbg">
+                    <div class="barfill"
+                         style="width:15%">
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= HISTORY ================= -->
+
+<section id="history"
+         class="page">
+
+    <div class="top">
+
+        <div>
+
+            <div class="eyebrow">
+                Local Session
+            </div>
+
+            <h1>
+                Screening History
+            </h1>
+
+            <div class="sub">
+                Recent screenings saved in this browser.
+            </div>
+
+        </div>
+
+
+        <button class="view"
+                onclick="clearHistory()">
+
+            Clear History
+
+        </button>
+
+    </div>
+
+
+    <div class="card section">
+
+        <div id="historyList">
+
+            <div class="history-empty">
+
+                No screening history yet.
+
+                <br>
+
+                Run an analysis from the Screening page.
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="notice">
+
+        History is stored locally in the browser for
+        prototype demonstration. It is not a clinical patient-record system.
+
+    </div>
+
+</section>
+
+
+<!-- ================= ABOUT ================= -->
+
+<section id="about"
+         class="page">
+
+    <div class="top">
+
+        <div>
+
+            <div class="eyebrow">
+                Research Prototype
+            </div>
+
+            <h1>
+                About the Model
+            </h1>
+
+            <div class="sub">
+                Architecture and workflow used in this project.
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="card section">
+
+        <h2>
+            Project Architecture
+        </h2>
+
+        <div class="desc">
+            Complete workflow of the diabetic-retinopathy
+            screening prototype.
+        </div>
+
+
+        <div class="arch">
+
+            <div>
+                <b>01</b>
+                Fundus Image
+                <br>
+                Input
+            </div>
+
+            <div>
+                <b>02</b>
+                Preprocessing
+                <br>
+                224×224
+            </div>
+
+            <div>
+                <b>03</b>
+                Lightweight CNN
+                <br>
+                Feature Extraction
+            </div>
+
+            <div>
+                <b>04</b>
+                Softmax
+                <br>
+                5 Classes
+            </div>
+
+            <div>
+                <b>05</b>
+                Grad-CAM
+                <br>
+                Explanation
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="grid g2">
+
+
+        <div class="card section">
+
+            <h2>
+                Five Output Classes
+            </h2>
+
+            <div class="chips">
+
+                <span class="chip">
+                    0 · No DR
+                </span>
+
+                <span class="chip">
+                    1 · Mild
+                </span>
+
+                <span class="chip">
+                    2 · Moderate
+                </span>
+
+                <span class="chip">
+                    3 · Severe
+                </span>
+
+                <span class="chip">
+                    4 · Proliferative
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="card section">
+
+            <h2>
+                Prototype Status
+            </h2>
+
+            <div class="row">
+                <span>Training</span>
+                <b>Completed</b>
+            </div>
+
+            <div class="row">
+                <span>Evaluation</span>
+                <b>Completed</b>
+            </div>
+
+            <div class="row">
+                <span>Grad-CAM</span>
+                <b>Working</b>
+            </div>
+
+            <div class="row">
+                <span>FastAPI</span>
+                <b>Running locally</b>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="notice">
+
+        ⚠️ This is an academic research prototype and
+        screening aid. It is not a substitute for examination
+        or diagnosis by a qualified eye-care professional.
+
+    </div>
+
+</section>
+
+
+<div class="footer">
+
+    RetinaAI · Lightweight CNN · 5-Class Classification · Explainable AI · Grad-CAM
+
+</div>
+
+</main>
+
+
+<script>
+
+/* =========================================================
+   PAGE NAVIGATION
+========================================================= */
+
+const pages =
+    [...document.querySelectorAll(".page")];
+
+const links =
+    [...document.querySelectorAll(".nav a")];
+
+
+function go(id){
+
+    location.hash = id;
+
+}
+
+
+function showPage(){
+
+    let id =
+        location.hash.substring(1) || "dashboard";
+
+
+    if(!document.getElementById(id)){
+        id = "dashboard";
+    }
+
+
+    pages.forEach(function(page){
+
+        page.classList.toggle(
+            "active",
+            page.id === id
+        );
+
+    });
+
+
+    links.forEach(function(link){
+
+        link.classList.toggle(
+            "active",
+            link.dataset.page === id
+        );
+
+    });
+
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+
+    if(id === "history"){
+        renderHistory();
+    }
+
+
+    if(id === "explanation"){
+        loadLatestResult();
+    }
+
+}
+
+
+window.addEventListener(
+    "hashchange",
+    showPage
+);
+
+
+showPage();
+
+
+/* =========================================================
+   IMAGE PREVIEW
+========================================================= */
+
+const file =
+    document.getElementById("file");
+
+const serverFile =
+    document.getElementById("serverFile");
+
+const preview =
+    document.getElementById("previewImg");
+
+const placeholder =
+    document.getElementById("ph");
+
+const fileName =
+    document.getElementById("fname");
+
+
+file.addEventListener(
+    "change",
+    function(){
+
+        if(!file.files.length){
+            return;
+        }
+
+
+        const selected =
+            file.files[0];
+
+
+        fileName.textContent =
+            "Selected: " + selected.name;
+
+
+        const dataTransfer =
+            new DataTransfer();
+
+
+        dataTransfer.items.add(
+            selected
+        );
+
+
+        serverFile.files =
+            dataTransfer.files;
+
+
+        preview.src =
+            URL.createObjectURL(selected);
+
+
+        preview.style.display =
+            "block";
+
+
+        placeholder.style.display =
+            "none";
+
+    }
+);
+
+
+/* =========================================================
+   DRAG AND DROP
+========================================================= */
+
+const drop =
+    document.getElementById("drop");
+
+
+drop.addEventListener(
+    "dragover",
+    function(event){
+
+        event.preventDefault();
+
+        drop.style.borderColor =
+            "#35d8ff";
+
+    }
+);
+
+
+drop.addEventListener(
+    "dragleave",
+    function(){
+
+        drop.style.borderColor =
+            "#2c5978";
+
+    }
+);
+
+
+drop.addEventListener(
+    "drop",
+    function(event){
+
+        event.preventDefault();
+
+
+        drop.style.borderColor =
+            "#2c5978";
+
+
+        if(
+            event.dataTransfer.files.length
+        ){
+
+            file.files =
+                event.dataTransfer.files;
+
+
+            file.dispatchEvent(
+                new Event("change")
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   LOAD LATEST AI RESULT
+========================================================= */
+
+function loadLatestResult(){
+
+    const stored =
+        localStorage.getItem(
+            "retina_latest_result"
+        );
+
+
+    const classElement =
+        document.getElementById(
+            "lastClass"
+        );
+
+
+    const confidenceElement =
+        document.getElementById(
+            "lastConf"
+        );
+
+
+    const meter =
+        document.getElementById(
+            "meter"
+        );
+
+
+    const heatmap =
+        document.getElementById(
+            "heatmap"
+        );
+
+
+    if(!stored){
+
+        classElement.textContent =
+            "No result yet";
+
+        confidenceElement.textContent =
+            "Run a screening first";
+
+        meter.style.width =
+            "0%";
+
+
+        heatmap.innerHTML = `
+
+            <div class="empty-heatmap">
+
+                No analysis loaded yet.
+
+                <br><br>
+
+                Run a screening and return here.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    try{
+
+        const result =
+            JSON.parse(stored);
+
+
+        const prediction =
+            result.prediction || "Unknown";
+
+
+        const confidence =
+            parseFloat(
+                result.confidence
+            ) || 0;
+
+
+        classElement.textContent =
+            prediction;
+
+
+        confidenceElement.textContent =
+            confidence.toFixed(2) +
+            "% Confidence";
+
+
+        meter.style.width =
+            Math.min(
+                confidence,
+                100
+            ) + "%";
+
+
+        if(result.resultImage){
+
+    heatmap.innerHTML = `
+
+        <img
+            src="${result.resultImage}"
+            alt="Grad-CAM AI Explanation"
+            style="
+                width:100%;
+                max-width:700px;
+                display:block;
+                margin:auto;
+                border-radius:12px;
+            "
+        >
+
+    `;
+
+}
+
+    }
+    catch(error){
+
+        console.error(
+            "Could not load result:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   SCREENING HISTORY
+========================================================= */
+
+function renderHistory(){
+
+    const container =
+        document.getElementById(
+            "historyList"
+        );
+
+
+    const history =
+        JSON.parse(
+            localStorage.getItem(
+                "retina_history"
+            ) || "[]"
+        );
+
+
+    if(!history.length){
+
+        container.innerHTML = `
+
+            <div class="history-empty">
+
+                No screening history yet.
+
+                <br>
+
+                Run an analysis from the Screening page.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        history.map(
+            function(item,index){
+
+                return `
+
+                    <div class="history-item">
+
+                        ${
+                            item.image
+                            ?
+                            `<img
+                                class="thumb"
+                                src="${item.image}"
+                                alt="Grad-CAM"
+                            >`
+                            :
+                            `<div class="thumb"></div>`
+                        }
+
+
+                        <div>
+
+                            <b>
+                                ${item.cls}
+                            </b>
+
+                            <small>
+
+                                ${item.conf}%
+                                confidence ·
+                                ${item.time}
+
+                            </small>
+
+                        </div>
+
+
+                        <button
+                            class="view"
+                            onclick="viewHistory(${index})">
+
+                            View
+
+                        </button>
+
+                    </div>
+
+                `;
+
+            }
+        )
+        .join("");
+
+}
+
+
+/* =========================================================
+   VIEW HISTORY RESULT
+========================================================= */
+
+function viewHistory(index){
+
+    const history =
+        JSON.parse(
+            localStorage.getItem(
+                "retina_history"
+            ) || "[]"
+        );
+
+
+    if(!history[index]){
+        return;
+    }
+
+
+    const item =
+        history[index];
+
+
+    localStorage.setItem(
+        "retina_latest_result",
+        JSON.stringify({
+
+            prediction:item.cls,
+
+            confidence:item.conf,
+
+            result_image:item.image,
+
+            time:item.time
+
+        })
+    );
+
+
+    go("explanation");
+
+}
+
+
+/* =========================================================
+   CLEAR HISTORY
+========================================================= */
+
+function clearHistory(){
+
+    localStorage.removeItem(
+        "retina_history"
+    );
+
+
+    renderHistory();
+
+}
+
+
+/* =========================================================
+   WHEN RETURNING FROM RESULT PAGE
+========================================================= */
+
+window.addEventListener(
+    "pageshow",
+    function(){
+
+        loadLatestResult();
+
+    }
+);
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,193 @@
+image_path,actual_class,predicted_class,actual_label,predicted_label,correct
+dataset\train_images\89ee1fa16f90.png,2,1,Moderate,Mild,False
+dataset\train_images\7877be80901c.png,2,1,Moderate,Mild,False
+dataset\train_images\74418f620068.png,2,1,Moderate,Mild,False
+dataset\train_images\d2c6b99ef62c.png,2,1,Moderate,Mild,False
+dataset\train_images\3ac3fbfca7d4.png,4,1,Proliferative,Mild,False
+dataset\train_images\a28bfb772f50.png,1,0,Mild,No DR,False
+dataset\train_images\211518c46162.png,4,2,Proliferative,Moderate,False
+dataset\train_images\cfd1bd0fcbb4.png,1,0,Mild,No DR,False
+dataset\train_images\070f67572d03.png,3,1,Severe,Mild,False
+dataset\train_images\9a4f370d341b.png,2,1,Moderate,Mild,False
+dataset\train_images\3ffa14d60b24.png,2,1,Moderate,Mild,False
+dataset\train_images\8446826853d0.png,2,4,Moderate,Proliferative,False
+dataset\train_images\b99794a0beed.png,2,1,Moderate,Mild,False
+dataset\train_images\8ff863f8874f.png,1,0,Mild,No DR,False
+dataset\train_images\8eeac97f02f0.png,4,2,Proliferative,Moderate,False
+dataset\train_images\7c90ab025331.png,4,1,Proliferative,Mild,False
+dataset\train_images\059bc89df7f4.png,1,2,Mild,Moderate,False
+dataset\train_images\1638404f385c.png,4,2,Proliferative,Moderate,False
+dataset\train_images\8d7bb0649a02.png,2,1,Moderate,Mild,False
+dataset\train_images\24b87f744598.png,3,2,Severe,Moderate,False
+dataset\train_images\4384fa687afa.png,2,1,Moderate,Mild,False
+dataset\train_images\ee74c3b177e0.png,2,1,Moderate,Mild,False
+dataset\train_images\18ce0cdc473d.png,0,2,No DR,Moderate,False
+dataset\train_images\82ac8463fadd.png,1,0,Mild,No DR,False
+dataset\train_images\7a6e384a0846.png,3,2,Severe,Moderate,False
+dataset\train_images\a95d9d61ddd4.png,0,1,No DR,Mild,False
+dataset\train_images\c6a145742708.png,4,2,Proliferative,Moderate,False
+dataset\train_images\cbd0870aa933.png,4,1,Proliferative,Mild,False
+dataset\train_images\d7e5fe5245e0.png,0,1,No DR,Mild,False
+dataset\train_images\da9574d35b82.png,0,2,No DR,Moderate,False
+dataset\train_images\f5e6226bd2e0.png,4,2,Proliferative,Moderate,False
+dataset\train_images\a7b03e58a6e1.png,0,2,No DR,Moderate,False
+dataset\train_images\69df7ade0575.png,2,1,Moderate,Mild,False
+dataset\train_images\034cb07a550f.png,4,2,Proliferative,Moderate,False
+dataset\train_images\8b76c3c5cb3e.png,3,2,Severe,Moderate,False
+dataset\train_images\d91273efb92a.png,2,1,Moderate,Mild,False
+dataset\train_images\6f4e0538d1e4.png,2,1,Moderate,Mild,False
+dataset\train_images\7005be54cab1.png,1,2,Mild,Moderate,False
+dataset\train_images\7ad0c4975890.png,0,2,No DR,Moderate,False
+dataset\train_images\e4730ddde408.png,4,2,Proliferative,Moderate,False
+dataset\train_images\3fc219927a97.png,2,1,Moderate,Mild,False
+dataset\train_images\61f403fdb434.png,4,2,Proliferative,Moderate,False
+dataset\train_images\3f752fcccec0.png,4,1,Proliferative,Mild,False
+dataset\train_images\653534ded339.png,2,0,Moderate,No DR,False
+dataset\train_images\51d780864365.png,2,1,Moderate,Mild,False
+dataset\train_images\6f4719c6bb4b.png,4,2,Proliferative,Moderate,False
+dataset\train_images\25b0e72705a8.png,3,1,Severe,Mild,False
+dataset\train_images\b019a49787c1.png,3,2,Severe,Moderate,False
+dataset\train_images\2df07eb5779f.png,4,1,Proliferative,Mild,False
+dataset\train_images\ee78ce914066.png,1,2,Mild,Moderate,False
+dataset\train_images\388f12e8df0b.png,2,1,Moderate,Mild,False
+dataset\train_images\fcc6aa6755e6.png,3,0,Severe,No DR,False
+dataset\train_images\d94e10f42861.png,2,1,Moderate,Mild,False
+dataset\train_images\1844a039b4ea.png,2,1,Moderate,Mild,False
+dataset\train_images\0c2e2369dfff.png,2,1,Moderate,Mild,False
+dataset\train_images\29bc0e721cfe.png,4,2,Proliferative,Moderate,False
+dataset\train_images\a2d349f567a6.png,2,0,Moderate,No DR,False
+dataset\train_images\bfd5c0e55420.png,2,1,Moderate,Mild,False
+dataset\train_images\6c250a30593b.png,4,2,Proliferative,Moderate,False
+dataset\train_images\5b5b80a3edee.png,4,2,Proliferative,Moderate,False
+dataset\train_images\1bea04b2bb2d.png,2,1,Moderate,Mild,False
+dataset\train_images\731b19a460ad.png,2,1,Moderate,Mild,False
+dataset\train_images\196e6a186452.png,2,1,Moderate,Mild,False
+dataset\train_images\fce93caa4758.png,4,1,Proliferative,Mild,False
+dataset\train_images\a81b06f50612.png,4,2,Proliferative,Moderate,False
+dataset\train_images\92d9e9f08709.png,1,2,Mild,Moderate,False
+dataset\train_images\e26bcae6c67b.png,0,1,No DR,Mild,False
+dataset\train_images\4abca30b676b.png,4,1,Proliferative,Mild,False
+dataset\train_images\8fd7ad26e691.png,4,1,Proliferative,Mild,False
+dataset\train_images\e26d8718ca58.png,1,0,Mild,No DR,False
+dataset\train_images\19244004583f.png,3,2,Severe,Moderate,False
+dataset\train_images\d28bd830c171.png,2,1,Moderate,Mild,False
+dataset\train_images\ffa47f6a7bf4.png,2,1,Moderate,Mild,False
+dataset\train_images\b8ac328009e0.png,2,0,Moderate,No DR,False
+dataset\train_images\40140a925c43.png,2,1,Moderate,Mild,False
+dataset\train_images\58529a8638d0.png,2,1,Moderate,Mild,False
+dataset\train_images\4bd941611343.png,4,1,Proliferative,Mild,False
+dataset\train_images\0eb52045349f.png,1,2,Mild,Moderate,False
+dataset\train_images\e3e490babc0c.png,2,1,Moderate,Mild,False
+dataset\train_images\31cb39681f6a.png,1,2,Mild,Moderate,False
+dataset\train_images\2fde69f20585.png,4,2,Proliferative,Moderate,False
+dataset\train_images\e740af6ac6ea.png,4,2,Proliferative,Moderate,False
+dataset\train_images\cf1b9d26d38d.png,4,2,Proliferative,Moderate,False
+dataset\train_images\69fff98cb32a.png,4,1,Proliferative,Mild,False
+dataset\train_images\a77dbec966d4.png,1,2,Mild,Moderate,False
+dataset\train_images\3c311c9109b0.png,2,1,Moderate,Mild,False
+dataset\train_images\4b618537d52f.png,3,1,Severe,Mild,False
+dataset\train_images\c3cd0200df79.png,3,1,Severe,Mild,False
+dataset\train_images\711d1480d2e3.png,2,1,Moderate,Mild,False
+dataset\train_images\2665f72e2dd3.png,3,2,Severe,Moderate,False
+dataset\train_images\6cfb7b44ef6f.png,4,2,Proliferative,Moderate,False
+dataset\train_images\fba493e17448.png,2,1,Moderate,Mild,False
+dataset\train_images\bfdee9be1f1d.png,4,0,Proliferative,No DR,False
+dataset\train_images\57a5f1015504.png,2,1,Moderate,Mild,False
+dataset\train_images\e17507a4a1f5.png,2,1,Moderate,Mild,False
+dataset\train_images\23d7ca170bdb.png,2,1,Moderate,Mild,False
+dataset\train_images\9eaac43744f5.png,2,1,Moderate,Mild,False
+dataset\train_images\25d069089c5e.png,4,1,Proliferative,Mild,False
+dataset\train_images\c76664770c07.png,3,2,Severe,Moderate,False
+dataset\train_images\b1f4122fd36a.png,2,1,Moderate,Mild,False
+dataset\train_images\cb02bb47fdc5.png,0,1,No DR,Mild,False
+dataset\train_images\ac720570dd0f.png,2,1,Moderate,Mild,False
+dataset\train_images\f2ee81781411.png,2,1,Moderate,Mild,False
+dataset\train_images\0fcfc6301f3d.png,2,1,Moderate,Mild,False
+dataset\train_images\fe674c2f73f5.png,1,2,Mild,Moderate,False
+dataset\train_images\e150935f66a6.png,2,0,Moderate,No DR,False
+dataset\train_images\d881c04f01fe.png,0,1,No DR,Mild,False
+dataset\train_images\bb7e0a2544cd.png,3,2,Severe,Moderate,False
+dataset\train_images\1e1fb019710d.png,2,1,Moderate,Mild,False
+dataset\train_images\6733544ae7a6.png,2,0,Moderate,No DR,False
+dataset\train_images\ef8109305128.png,1,2,Mild,Moderate,False
+dataset\train_images\887c26fc0e1f.png,4,2,Proliferative,Moderate,False
+dataset\train_images\61bbc11fe503.png,4,1,Proliferative,Mild,False
+dataset\train_images\093a42649c29.png,3,1,Severe,Mild,False
+dataset\train_images\224bb938e2dd.png,2,1,Moderate,Mild,False
+dataset\train_images\810d3779abd9.png,3,1,Severe,Mild,False
+dataset\train_images\42cc993f23a9.png,3,2,Severe,Moderate,False
+dataset\train_images\a32b5ce3d48a.png,4,2,Proliferative,Moderate,False
+dataset\train_images\dbfd238b3468.png,3,2,Severe,Moderate,False
+dataset\train_images\9c088d2d1559.png,2,0,Moderate,No DR,False
+dataset\train_images\157d17349cc6.png,2,0,Moderate,No DR,False
+dataset\train_images\83517eaeccb9.png,0,1,No DR,Mild,False
+dataset\train_images\253e96488cfb.png,0,1,No DR,Mild,False
+dataset\train_images\8860c7b11530.png,2,1,Moderate,Mild,False
+dataset\train_images\d85ea1220a03.png,4,0,Proliferative,No DR,False
+dataset\train_images\c3e02d4a1798.png,2,1,Moderate,Mild,False
+dataset\train_images\2e79041ef722.png,2,0,Moderate,No DR,False
+dataset\train_images\5efa24b03d5e.png,1,0,Mild,No DR,False
+dataset\train_images\50a2aef380c8.png,3,2,Severe,Moderate,False
+dataset\train_images\0afdfe5f422c.png,2,1,Moderate,Mild,False
+dataset\train_images\2d07162a13b1.png,0,2,No DR,Moderate,False
+dataset\train_images\76fe19ff64fb.png,2,1,Moderate,Mild,False
+dataset\train_images\2017cd92c63d.png,4,1,Proliferative,Mild,False
+dataset\train_images\e1fb532f55df.png,3,2,Severe,Moderate,False
+dataset\train_images\da6389d129aa.png,0,1,No DR,Mild,False
+dataset\train_images\0180bfa26c0b.png,2,1,Moderate,Mild,False
+dataset\train_images\ed88faaa325a.png,2,1,Moderate,Mild,False
+dataset\train_images\a5c9a8c726b2.png,4,0,Proliferative,No DR,False
+dataset\train_images\6107a2e9f60e.png,0,2,No DR,Moderate,False
+dataset\train_images\8d62ba9cb22a.png,2,0,Moderate,No DR,False
+dataset\train_images\6377e23928f6.png,1,2,Mild,Moderate,False
+dataset\train_images\365f8c01d994.png,1,0,Mild,No DR,False
+dataset\train_images\3a1d3ce00f0c.png,2,0,Moderate,No DR,False
+dataset\train_images\ffcf7b45f213.png,2,1,Moderate,Mild,False
+dataset\train_images\9a78c6a7b1c2.png,2,1,Moderate,Mild,False
+dataset\train_images\0dbaa09a458c.png,2,1,Moderate,Mild,False
+dataset\train_images\a505981d1cab.png,2,1,Moderate,Mild,False
+dataset\train_images\3435fd8675a2.png,3,2,Severe,Moderate,False
+dataset\train_images\1a1b4b2450ca.png,2,1,Moderate,Mild,False
+dataset\train_images\115e42dd6a81.png,2,1,Moderate,Mild,False
+dataset\train_images\405b4f78658f.png,3,2,Severe,Moderate,False
+dataset\train_images\91cf56d3d1af.png,3,2,Severe,Moderate,False
+dataset\train_images\6c6efb6b1358.png,1,2,Mild,Moderate,False
+dataset\train_images\e3ab63dc9a60.png,4,1,Proliferative,Mild,False
+dataset\train_images\0104b032c141.png,3,2,Severe,Moderate,False
+dataset\train_images\b8f1b30877db.png,2,1,Moderate,Mild,False
+dataset\train_images\c7e827fc7f41.png,2,1,Moderate,Mild,False
+dataset\train_images\ad570b850a4f.png,2,1,Moderate,Mild,False
+dataset\train_images\af3b0115aad1.png,3,1,Severe,Mild,False
+dataset\train_images\9b32e8ef0ca0.png,2,1,Moderate,Mild,False
+dataset\train_images\3206171db5be.png,4,2,Proliferative,Moderate,False
+dataset\train_images\95e732e043a1.png,4,2,Proliferative,Moderate,False
+dataset\train_images\74eee788edee.png,3,1,Severe,Mild,False
+dataset\train_images\7b211d8bd249.png,4,1,Proliferative,Mild,False
+dataset\train_images\07929d32b5b3.png,1,2,Mild,Moderate,False
+dataset\train_images\977e1ca77653.png,1,2,Mild,Moderate,False
+dataset\train_images\c4e8b1ec8893.png,2,0,Moderate,No DR,False
+dataset\train_images\3a122851e526.png,2,1,Moderate,Mild,False
+dataset\train_images\dee687c6e88a.png,2,1,Moderate,Mild,False
+dataset\train_images\34723fae6475.png,2,1,Moderate,Mild,False
+dataset\train_images\f080a22008be.png,3,2,Severe,Moderate,False
+dataset\train_images\a8e08e7fe016.png,2,1,Moderate,Mild,False
+dataset\train_images\a804cef3e51f.png,2,1,Moderate,Mild,False
+dataset\train_images\eaa0dfbd5024.png,4,1,Proliferative,Mild,False
+dataset\train_images\4462fba1d2a1.png,4,1,Proliferative,Mild,False
+dataset\train_images\47b756014447.png,2,1,Moderate,Mild,False
+dataset\train_images\4dbce359d0e1.png,2,1,Moderate,Mild,False
+dataset\train_images\c7c3d363bc86.png,0,2,No DR,Moderate,False
+dataset\train_images\aba3063c5413.png,3,1,Severe,Mild,False
+dataset\train_images\cac40227d3b2.png,2,0,Moderate,No DR,False
+dataset\train_images\1c4f3aa4df06.png,4,1,Proliferative,Mild,False
+dataset\train_images\1b32e1d775ea.png,4,2,Proliferative,Moderate,False
+dataset\train_images\1f4bf8e28b41.png,2,1,Moderate,Mild,False
+dataset\train_images\191a711852bd.png,3,1,Severe,Mild,False
+dataset\train_images\6d454444f17c.png,2,1,Moderate,Mild,False
+dataset\train_images\5b804948e35f.png,1,0,Mild,No DR,False
+dataset\train_images\7102f29e052e.png,2,1,Moderate,Mild,False
+dataset\train_images\61da799bf0aa.png,0,1,No DR,Mild,False
+dataset\train_images\51a1d162e223.png,4,2,Proliferative,Moderate,False
+dataset\train_images\e1ab92228e60.png,0,2,No DR,Moderate,False
+dataset\train_images\e32a359be36d.png,3,0,Severe,No DR,False
+dataset\train_images\d436c06f0490.png,0,1,No DR,Mild,False

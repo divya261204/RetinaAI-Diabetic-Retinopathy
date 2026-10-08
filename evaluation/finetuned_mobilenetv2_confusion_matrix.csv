@@ -1,0 +1,6 @@
+,Pred No DR,Pred Mild,Pred Moderate,Pred Severe,Pred Proliferative
+Actual No DR,249,22,0,0,0
+Actual Mild,6,45,5,0,0
+Actual Moderate,10,53,81,2,4
+Actual Severe,1,2,14,5,7
+Actual Proliferative,1,13,22,1,7

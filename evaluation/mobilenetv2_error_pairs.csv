@@ -1,0 +1,16 @@
+actual_class,predicted_class,Error Count
+Moderate,Severe,55
+Moderate,No DR,46
+Mild,No DR,28
+No DR,Mild,20
+Proliferative,Severe,15
+Severe,Moderate,15
+Mild,Severe,14
+Proliferative,No DR,14
+Proliferative,Moderate,14
+Moderate,Mild,13
+Severe,No DR,6
+Mild,Moderate,3
+Severe,Mild,2
+Mild,Proliferative,1
+No DR,Moderate,1

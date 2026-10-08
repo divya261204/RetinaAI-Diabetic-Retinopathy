@@ -1,0 +1,1015 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>RetinaAI · Diabetic Retinopathy Screening</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            color: #172033;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #eef5ff 0%,
+                    #f8fbff 50%,
+                    #eef7f6 100%
+                );
+        }
+
+        .container {
+            width: min(1180px, 94%);
+            margin: auto;
+        }
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        header {
+            padding: 28px 0 20px;
+        }
+
+        .brand {
+            font-size: 30px;
+            font-weight: 800;
+            color: #173f8a;
+        }
+
+        .tagline {
+            margin-top: 7px;
+            color: #68758a;
+            font-size: 14px;
+        }
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .hero {
+            background: white;
+            border-radius: 24px;
+            padding: 42px;
+            margin-bottom: 24px;
+
+            box-shadow:
+                0 12px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .hero h1 {
+            margin: 0;
+            font-size: 38px;
+            line-height: 1.15;
+            color: #142f65;
+        }
+
+        .hero p {
+            max-width: 760px;
+            margin-top: 16px;
+            line-height: 1.7;
+            color: #5f6c80;
+        }
+
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 22px;
+        }
+
+        .chip {
+            padding: 8px 14px;
+            border-radius: 30px;
+            background: #eef4ff;
+            color: #245ca8;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        /* =====================================================
+           SCREENING CARD
+        ===================================================== */
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 26px;
+
+            box-shadow:
+                0 10px 35px rgba(0, 0, 0, 0.07);
+
+            margin-bottom: 24px;
+        }
+
+        .card h2 {
+            margin-top: 0;
+            color: #173f8a;
+        }
+
+        .desc {
+            color: #69768a;
+            line-height: 1.6;
+        }
+
+        /* =====================================================
+           UPLOAD
+        ===================================================== */
+
+        .upload-box {
+            border: 2px dashed #b8c8e5;
+            border-radius: 18px;
+            padding: 35px;
+            text-align: center;
+            background: #f8fbff;
+            margin-top: 20px;
+        }
+
+        .upload-box input[type="file"] {
+            width: 100%;
+            max-width: 500px;
+            padding: 12px;
+            background: white;
+            border-radius: 10px;
+            border: 1px solid #d4dce8;
+        }
+
+        .button {
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+
+            margin-top: 18px;
+            padding: 14px 24px;
+
+            border-radius: 11px;
+
+            background: #173f8a;
+            color: white;
+
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .button:hover {
+            opacity: 0.92;
+        }
+
+        /* =====================================================
+           PROCESS FLOW
+        ===================================================== */
+
+        .pipeline {
+            display: grid;
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(150px, 1fr)
+                );
+
+            gap: 14px;
+            margin-top: 22px;
+        }
+
+        .step {
+            padding: 18px;
+            border-radius: 14px;
+            background: #f6f8fc;
+            text-align: center;
+        }
+
+        .step strong {
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .step span {
+            color: #718096;
+            font-size: 13px;
+        }
+
+        /* =====================================================
+           EXPLAINABLE AI
+        ===================================================== */
+
+        .explain-grid {
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 1.5fr)
+                minmax(280px, 0.8fr);
+
+            gap: 24px;
+
+            margin-top: 22px;
+        }
+
+        .heatmap-container {
+            background: #f4f7fb;
+            border-radius: 17px;
+            padding: 15px;
+            min-height: 320px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #gradcamImage {
+            width: 100%;
+            max-height: 560px;
+            object-fit: contain;
+            border-radius: 13px;
+            display: block;
+        }
+
+        .empty-heatmap {
+            text-align: center;
+            color: #718096;
+            padding: 45px 20px;
+        }
+
+        .ai-info {
+            background: #f5f8ff;
+            border-radius: 17px;
+            padding: 24px;
+        }
+
+        .ai-info h3 {
+            margin-top: 0;
+            color: #173f8a;
+        }
+
+        .prediction-value {
+            font-size: 31px;
+            font-weight: 800;
+            color: #173f8a;
+            margin: 10px 0;
+        }
+
+        .confidence-value {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 22px;
+        }
+
+        .explanation-text {
+            color: #5f6c80;
+            line-height: 1.7;
+        }
+
+        .ai-disclaimer {
+            margin-top: 22px;
+            padding: 14px 17px;
+
+            border-radius: 12px;
+
+            background: #f8fafc;
+
+            color: #64748b;
+
+            font-size: 13px;
+
+            line-height: 1.6;
+        }
+
+        /* =====================================================
+           ANALYTICS
+        ===================================================== */
+
+        .analytics-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(190px, 1fr)
+                );
+
+            gap: 15px;
+
+            margin-top: 22px;
+        }
+
+        .metric {
+            padding: 22px;
+            border-radius: 15px;
+            background: #f7f9fc;
+        }
+
+        .metric-label {
+            color: #718096;
+            font-size: 13px;
+        }
+
+        .metric-value {
+            margin-top: 7px;
+            font-size: 27px;
+            font-weight: 800;
+            color: #173f8a;
+        }
+
+        .metric-small {
+            margin-top: 5px;
+            color: #7b8798;
+            font-size: 12px;
+        }
+
+        /* =====================================================
+           NOTICE
+        ===================================================== */
+
+        .notice {
+            background: #fff8e6;
+            border: 1px solid #efd78e;
+            color: #5c4a16;
+
+            border-radius: 15px;
+
+            padding: 18px;
+
+            line-height: 1.65;
+        }
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        footer {
+            text-align: center;
+            padding: 25px 0 40px;
+
+            color: #788398;
+            font-size: 13px;
+        }
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 800px) {
+
+            .hero {
+                padding: 28px;
+            }
+
+            .hero h1 {
+                font-size: 30px;
+            }
+
+            .explain-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+    <!-- =====================================================
+         HEADER
+    ===================================================== -->
+
+    <header>
+
+        <div class="brand">
+            RetinaAI
+        </div>
+
+        <div class="tagline">
+            Lightweight CNN · Fine-tuned MobileNetV2 ·
+            5-Class Classification · Grad-CAM
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         HERO
+    ===================================================== -->
+
+    <section class="hero">
+
+        <h1>
+            Diabetic Retinopathy
+            Screening Assistant
+        </h1>
+
+        <p>
+            Upload a retinal fundus photograph and allow
+            the fine-tuned MobileNetV2 model to generate
+            a five-class screening result with an
+            explainable-AI Grad-CAM visualization.
+        </p>
+
+        <div class="chips">
+
+            <div class="chip">
+                5-Class Classification
+            </div>
+
+            <div class="chip">
+                Fine-tuned MobileNetV2
+            </div>
+
+            <div class="chip">
+                Explainable AI
+            </div>
+
+            <div class="chip">
+                Grad-CAM
+            </div>
+
+            <div class="chip">
+                Local Processing
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         SCREENING
+    ===================================================== -->
+
+    <section class="card">
+
+        <h2>
+            🔬 Run Screening
+        </h2>
+
+        <div class="desc">
+
+            Upload a fundus photograph to generate
+            the model prediction and explainable-AI
+            visualization.
+
+        </div>
+
+
+        <form
+            action="/predict"
+            method="post"
+            enctype="multipart/form-data"
+        >
+
+            <div class="upload-box">
+
+                <input
+                    type="file"
+                    name="file"
+                    accept=".jpg,.jpeg,.png"
+                    required
+                >
+
+                <br>
+
+                <button
+                    type="submit"
+                    class="button"
+                >
+                    Analyze Retinal Image
+                </button>
+
+            </div>
+
+        </form>
+
+    </section>
+
+
+    <!-- =====================================================
+         PIPELINE
+    ===================================================== -->
+
+    <section class="card">
+
+        <h2>
+            🔄 AI Processing Pipeline
+        </h2>
+
+        <div class="desc">
+
+            Fundus Image → Preprocessing →
+            Fine-tuned MobileNetV2 → Softmax →
+            Grad-CAM
+
+        </div>
+
+
+        <div class="pipeline">
+
+            <div class="step">
+
+                <strong>
+                    ① Upload
+                </strong>
+
+                <span>
+                    Fundus image
+                </span>
+
+            </div>
+
+
+            <div class="step">
+
+                <strong>
+                    ② Preprocess
+                </strong>
+
+                <span>
+                    Resize & enhancement
+                </span>
+
+            </div>
+
+
+            <div class="step">
+
+                <strong>
+                    ③ Predict
+                </strong>
+
+                <span>
+                    5-class model
+                </span>
+
+            </div>
+
+
+            <div class="step">
+
+                <strong>
+                    ④ Explain
+                </strong>
+
+                <span>
+                    Generate Grad-CAM
+                </span>
+
+            </div>
+
+
+            <div class="step">
+
+                <strong>
+                    ⑤ Review
+                </strong>
+
+                <span>
+                    Screening result
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         EXPLAINABLE AI
+    ===================================================== -->
+
+    <section class="card">
+
+        <h2>
+            🔥 Explainable AI
+        </h2>
+
+        <div class="desc">
+
+            Grad-CAM highlights image regions that
+            contributed more strongly to the model's
+            prediction.
+
+        </div>
+
+
+        <div
+            class="explain-grid"
+            id="explainableAI"
+        >
+
+
+            <!-- GRAD-CAM IMAGE -->
+
+            <div>
+
+                <div
+                    class="heatmap-container"
+                    id="heatmap"
+                >
+
+                    <div
+                        class="empty-heatmap"
+                        id="heatmapEmpty"
+                    >
+
+                        Run a screening to view
+                        the Grad-CAM explanation.
+
+                    </div>
+
+
+                    <img
+                        id="gradcamImage"
+                        src=""
+                        alt="Grad-CAM AI Explanation"
+                        style="display:none;"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- RESULT INFORMATION -->
+
+            <div
+                class="ai-info"
+                id="aiInfo"
+                style="display:none;"
+            >
+
+                <h3>
+                    Latest Prediction
+                </h3>
+
+
+                <div
+                    class="prediction-value"
+                    id="latestPrediction"
+                >
+                    —
+                </div>
+
+
+                <div
+                    class="confidence-value"
+                    id="latestConfidence"
+                >
+                    Confidence: —
+                </div>
+
+
+                <h3>
+                    AI Explanation
+                </h3>
+
+
+                <p
+                    class="explanation-text"
+                    id="gradcamText"
+                >
+                    —
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="ai-disclaimer">
+
+            Grad-CAM is an AI interpretability aid.
+            Highlighted regions represent areas that
+            contributed more strongly to the model output
+            and should not be interpreted as confirmed
+            disease lesions.
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         ANALYTICS
+    ===================================================== -->
+
+    <section class="card">
+
+        <h2>
+            📊 Analytics
+        </h2>
+
+        <div class="desc">
+
+            Evaluation of the fine-tuned MobileNetV2 model.
+
+        </div>
+
+
+        <div class="analytics-grid">
+
+
+            <div class="metric">
+
+                <div class="metric-label">
+                    Test Accuracy
+                </div>
+
+                <div class="metric-value">
+                    70.36%
+                </div>
+
+                <div class="metric-small">
+                    550 test images
+                </div>
+
+            </div>
+
+
+            <div class="metric">
+
+                <div class="metric-label">
+                    Macro Precision
+                </div>
+
+                <div class="metric-value">
+                    59.0%
+                </div>
+
+                <div class="metric-small">
+                    Across 5 classes
+                </div>
+
+            </div>
+
+
+            <div class="metric">
+
+                <div class="metric-label">
+                    Macro Recall
+                </div>
+
+                <div class="metric-value">
+                    52.0%
+                </div>
+
+                <div class="metric-small">
+                    Across 5 classes
+                </div>
+
+            </div>
+
+
+            <div class="metric">
+
+                <div class="metric-label">
+                    Macro F1
+                </div>
+
+                <div class="metric-value">
+                    50.0%
+                </div>
+
+                <div class="metric-small">
+                    Across 5 classes
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         DISCLAIMER
+    ===================================================== -->
+
+    <section class="notice">
+
+        <strong>
+            ⚠️ Academic Prototype Disclaimer
+        </strong>
+
+        <br><br>
+
+        This application is an academic AI screening
+        prototype. Model predictions are not medical
+        diagnoses and should not replace examination
+        by a qualified healthcare professional.
+
+    </section>
+
+
+    <!-- =====================================================
+         FOOTER
+    ===================================================== -->
+
+    <footer>
+
+        RetinaAI · Fine-tuned MobileNetV2 ·
+        5-Class Classification · Grad-CAM
+
+    </footer>
+
+
+</div>
+
+
+<!-- =========================================================
+     LOAD LATEST SCREENING INTO EXPLAINABLE AI
+========================================================= -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        try {
+
+            const stored =
+                localStorage.getItem(
+                    "retina_latest_result"
+                );
+
+
+            /*
+             * No previous screening
+             */
+
+            if (!stored) {
+
+                return;
+
+            }
+
+
+            const result =
+                JSON.parse(stored);
+
+
+            const image =
+                result.resultImage ||
+                result.heatmapImage ||
+                "";
+
+
+            /*
+             * Elements
+             */
+
+            const empty =
+                document.getElementById(
+                    "heatmapEmpty"
+                );
+
+            const gradcamImage =
+                document.getElementById(
+                    "gradcamImage"
+                );
+
+            const aiInfo =
+                document.getElementById(
+                    "aiInfo"
+                );
+
+            const prediction =
+                document.getElementById(
+                    "latestPrediction"
+                );
+
+            const confidence =
+                document.getElementById(
+                    "latestConfidence"
+                );
+
+            const explanation =
+                document.getElementById(
+                    "gradcamText"
+                );
+
+
+            /*
+             * If no Grad-CAM image exists,
+             * keep the clean empty state.
+             */
+
+            if (!image) {
+
+                return;
+
+            }
+
+
+            /*
+             * Hide empty message
+             */
+
+            empty.style.display =
+                "none";
+
+
+            /*
+             * Show Grad-CAM image
+             */
+
+            gradcamImage.src =
+                image;
+
+            gradcamImage.style.display =
+                "block";
+
+
+            /*
+             * Show AI information
+             */
+
+            aiInfo.style.display =
+                "block";
+
+
+            /*
+             * Prediction
+             */
+
+            prediction.textContent =
+                result.prediction || "—";
+
+
+            /*
+             * Confidence
+             */
+
+            if (
+                result.confidence !==
+                undefined &&
+                result.confidence !== null
+            ) {
+
+                const value =
+                    Number(
+                        result.confidence
+                    );
+
+
+                confidence.textContent =
+                    "Confidence: " +
+                    value.toFixed(2) +
+                    "%";
+
+            }
+
+
+            /*
+             * Explanation
+             */
+
+            explanation.textContent =
+                result.interpretation ||
+                "Grad-CAM highlights regions that contributed more strongly to the model's prediction.";
+
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Explainable AI loading error:",
+                error
+            );
+
+        }
+
+    }
+
+);
+
+</script>
+
+
+</body>
+
+</html>
+```

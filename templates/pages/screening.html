@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>New Screening · RetinaAI</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f7fb;
+            color: #172033;
+        }
+
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* SIDEBAR */
+
+        .sidebar {
+            width: 245px;
+            background: #101a33;
+            color: white;
+            padding: 28px 18px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+        }
+
+        .logo {
+            font-size: 23px;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        .subtitle {
+            color: #9da9c4;
+            font-size: 12px;
+            margin-bottom: 35px;
+        }
+
+        .nav-title {
+            color: #71809f;
+            font-size: 11px;
+            font-weight: bold;
+            margin: 0 0 10px 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav a {
+            display: block;
+            text-decoration: none;
+            color: #c7d0e5;
+            padding: 13px 14px;
+            margin-bottom: 6px;
+            border-radius: 9px;
+            font-size: 14px;
+        }
+
+        .nav a:hover {
+            background: #1b294b;
+            color: white;
+        }
+
+        .nav a.active {
+            background: #263b68;
+            color: white;
+        }
+
+        /* MAIN */
+
+        .main {
+            margin-left: 245px;
+            width: calc(100% - 245px);
+            padding: 35px 45px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 35px;
+        }
+
+        .page-title {
+            font-size: 30px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .page-description {
+            margin-top: 8px;
+            color: #69758d;
+            font-size: 14px;
+        }
+
+        .status {
+            background: white;
+            padding: 10px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .status-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #25b46b;
+            border-radius: 50%;
+            margin-right: 7px;
+        }
+
+        /* CARD */
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: 0 8px 30px rgba(25, 40, 70, 0.07);
+            max-width: 850px;
+        }
+
+        .card h2 {
+            margin-top: 0;
+            margin-bottom: 8px;
+            font-size: 21px;
+        }
+
+        .card-description {
+            color: #707b91;
+            font-size: 14px;
+            margin-bottom: 28px;
+        }
+
+        /* UPLOAD */
+
+        .upload-area {
+            border: 2px dashed #cbd3e2;
+            border-radius: 14px;
+            padding: 50px 30px;
+            text-align: center;
+            background: #fafbfe;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .upload-area:hover {
+            border-color: #526da8;
+            background: #f6f8fd;
+        }
+
+        .upload-icon {
+            font-size: 46px;
+            margin-bottom: 12px;
+        }
+
+        .upload-title {
+            font-size: 17px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .upload-text {
+            color: #7b8497;
+            font-size: 13px;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .file-name {
+            margin-top: 18px;
+            color: #354b7a;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        /* BUTTON */
+
+        .button-area {
+            margin-top: 25px;
+        }
+
+        .analyze-btn {
+            border: none;
+            background: #17264a;
+            color: white;
+            padding: 14px 28px;
+            border-radius: 9px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .analyze-btn:hover {
+            background: #263b68;
+        }
+
+        .analyze-btn:disabled {
+            background: #aab2c1;
+            cursor: not-allowed;
+        }
+
+        /* INFO */
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 25px;
+            max-width: 850px;
+        }
+
+        .info-box {
+            background: white;
+            border-radius: 12px;
+            padding: 18px;
+            box-shadow: 0 5px 20px rgba(25,40,70,0.05);
+        }
+
+        .info-box strong {
+            display: block;
+            font-size: 13px;
+            margin-bottom: 6px;
+        }
+
+        .info-box span {
+            color: #707b91;
+            font-size: 12px;
+        }
+
+        @media (max-width: 800px) {
+
+            .sidebar {
+                width: 190px;
+            }
+
+            .main {
+                margin-left: 190px;
+                width: calc(100% - 190px);
+                padding: 25px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="layout">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="logo">RetinaAI</div>
+
+        <div class="subtitle">
+            Explainable Retinal Screening
+        </div>
+
+        <div class="nav-title">Navigation</div>
+
+        <nav class="nav">
+
+            <a href="/dashboard">
+                🏠 Dashboard
+            </a>
+
+            <a href="/screening" class="active">
+                🔬 New Screening
+            </a>
+
+            <a href="/history">
+                📋 History
+            </a>
+
+            <a href="/analytics">
+                📊 Analytics
+            </a>
+
+            <a href="/explainable-ai">
+                🧠 Explainable AI
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+        <div class="topbar">
+
+            <div>
+                <h1 class="page-title">
+                    New Screening
+                </h1>
+
+                <div class="page-description">
+                    Upload a retinal fundus image for AI-based screening analysis.
+                </div>
+            </div>
+
+            <div class="status">
+                <span class="status-dot"></span>
+                AI System Ready
+            </div>
+
+        </div>
+
+
+        <!-- UPLOAD CARD -->
+
+        <div class="card">
+
+            <h2>
+                Upload Retinal Image
+            </h2>
+
+            <div class="card-description">
+                Select a clear retinal fundus image. The AI model will analyze
+                the image and generate a screening result with explainable AI.
+            </div>
+
+
+            <form action="/predict" method="post" enctype="multipart/form-data">
+
+                <label class="upload-area" for="file">
+
+                    <div class="upload-icon">
+                        👁️
+                    </div>
+
+                    <div class="upload-title">
+                        Select Retinal Image
+                    </div>
+
+                    <div class="upload-text">
+                        Click here to browse · PNG, JPG or JPEG
+                    </div>
+
+                    <input
+                        type="file"
+                        id="file"
+                        name="file"
+                        accept=".png,.jpg,.jpeg"
+                        required
+                        onchange="showFileName(this)"
+                    >
+
+                    <div class="file-name" id="fileName">
+                        No image selected
+                    </div>
+
+                </label>
+
+
+                <div class="button-area">
+
+                    <button
+                        type="submit"
+                        class="analyze-btn"
+                        id="analyzeButton"
+                        disabled
+                    >
+                        Analyze Retinal Image
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+
+        <!-- INFORMATION -->
+
+        <div class="info-grid">
+
+            <div class="info-box">
+                <strong>📐 Image Processing</strong>
+                <span>
+                    Image resized and preprocessed to 224 × 224 pixels.
+                </span>
+            </div>
+
+            <div class="info-box">
+                <strong>🧠 AI Model</strong>
+                <span>
+                    Fine-tuned MobileNetV2 with 5-class classification.
+                </span>
+            </div>
+
+            <div class="info-box">
+                <strong>🔥 Explainability</strong>
+                <span>
+                    Grad-CAM highlights regions influencing the model output.
+                </span>
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<script>
+
+function showFileName(input) {
+
+    const fileName = document.getElementById("fileName");
+    const button = document.getElementById("analyzeButton");
+
+    if (input.files && input.files.length > 0) {
+
+        fileName.textContent =
+            "Selected: " + input.files[0].name;
+
+        button.disabled = false;
+
+    } else {
+
+        fileName.textContent =
+            "No image selected";
+
+        button.disabled = true;
+    }
+}
+
+</script>
+
+</body>
+</html>
